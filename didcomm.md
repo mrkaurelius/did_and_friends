@@ -11,9 +11,12 @@ Message-Based, Asynchronous, and Simplex
 
 The version of DIDComm incubated in the Hyperledger Aries community is referred to as Version 1 (V1). This spec describes the next version, referred to as Version 2 (V2). This section will describe the changes between V1 and V2, useful to members of the Aries community.
 
-https://github.com/decentralized-identity/didcomm-messaging/blob/c4ea1477e8ed967bba070b452ca12a7d2ed52019/guide/whatsnew.md
+[whats new](https://github.com/decentralized-identity/didcomm-messaging/blob/c4ea1477e8ed967bba070b452ca12a7d2ed52019/guide/whatsnew.md) 
+[encryption spec](https://github.com/decentralized-identity/DIDComm-js/blob/master/docs/encryption-spec.md)
+[aries encryption spec](https://github.com/hyperledger/aries-rfcs/blob/master/features/0019-encryption-envelope/README.md)
 
-## didcomm-js
+
+### didcomm-js
 JS implementation of pack and unpack https://github.com/decentralized-identity/DIDComm-js
 
 ### Summary of Changes

@@ -23,12 +23,21 @@ not wide spread
 ### Self-Issued OpenID Connect Provider DID Profile
 - https://identity.foundation/did-siop/#did-authn
 - https://ldapwiki.com/wiki/Self-Issued%20OpenID%20Provider
+- https://nbviewer.jupyter.org/github/WebOfTrustInfo/rwot8-barcelona/blob/master/final-documents/did-auth-oidc.pdf#page=2&zoom=100,690,832
 
 This specification defines the "SIOP DID Profile" (SIOP DID) that is a DID AuthN flavor to use OpenID Connect (OIDC) together with the strong decentralization, privacy and security guarantees of Decentralized Identifiers (DID) for everyone who wants to have a generic way to integrate Identity Wallets into their web applications.
 
+We believe that using the SIOP functionality to prove ownership of a DID has multiple advantages. It reuses
+existing functionality, possibly accelerating adoption relative to approaches utilizing new custom protocols.
+
+#### NATURE OF THE DESIGN DECISIONS
+- Reuse existing specs whenever possible.
+- Remain compatible with existing specs that are reused.
+- Layer DID Auth functionality such that it can be added incrementally without breaking existing uses of
+the self-issued functionality.
+
 #### Sorular
 
-- DIDler neden bu sistemlerin yerini direkt almiyor/alamiyor ?
 
 ### DID CAS
 

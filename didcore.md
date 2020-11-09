@@ -126,34 +126,16 @@ A DID document can express verification methods, such as cryptographic keys, whi
 }
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## 11. Examples
-
 
 
 # peer did
 Peer DID Method Specification  
 
-# using dids
 
-## Directly using DID doc
+## Caveats
 
-## Indirect using DID doc
-
+- did resolving vs did dereferening
 
 
 
