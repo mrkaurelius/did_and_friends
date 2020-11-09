@@ -9,3 +9,16 @@
 - https://en.wikipedia.org/wiki/Identity_provider_(SAML)
 - https://en.wikipedia.org/wiki/Identity-management_system
 - https://en.wikipedia.org/wiki/Federated_identity
+
+## code 
+### decentralized-identity/did-common-java 
+Shared DID Java library.  
+https://github.com/decentralized-identity/did-common-java
+
+
+### bcgov/http-did-auth-proxy
+DID Auth HTTP proxy.  
+https://github.com/bcgov/http-did-auth-proxy
+
+### decentralized-identity/did-security-typescript 
+Typescript implementation of DID security and privacy controls

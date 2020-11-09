@@ -3,7 +3,7 @@ title: Decentralised IDentifiers and Friends
 subtitle: Vurucu ve Akillica Alt Başlık  
 author: Abdulhamit Kumru
 date: 2020 
-theme: CambridgeUS
+theme: Luebeck
 colortheme: lily
 institute: Blokzincir Laboratuvarı
 section-titles: false
@@ -102,13 +102,10 @@ did:sov
 ### Hyperledger Indy
 imp of did sov
 
-
-
-
-
 # DID Auth
 
 ### did auth giris
+- web auth ietf rfc lerine degin
 
 ## rwot6 auth
 
@@ -117,12 +114,21 @@ imp of did sov
 
 ## auth protokollerinde guncel durum
 
-#### hali hazirdaki auth protokolleri
+### guncel durum
+
+- did auth grubu calismalari durmus did siop daki degisiklikler sebebiyle
+- did authN ???
+
+### hali hazirdaki auth protokolleri
 !!!  bu protokolleri ogren
+
+- The Quest to Replace Passwords:
+A Framework for Comparative Evaluation of Web Authentication Scheme
+- Self-Issued OpenID Connect Provider DID Profile v0.1 https://identity.foundation/did-siop/
 
 - OAuth 
 - FIDO 
-- OpenID Connect 
+- OpenID Connect  
 - Kerberos 
 - LDAP (Active Directory)
 - SSO implementations
@@ -130,16 +136,33 @@ imp of did sov
     - OAuth Based
     - Security Assertion Markup Language (SAML)
     - Smart-card Based
-!!! bunlari kisaca ozetle
 
 ### Auth protokolleri taksonomisi 
-!!! taksonomi yap
+- !!! taksonomi yap
+    - SSO tax doi: 10.1016/j.protcy.2012.05.019 
+- !!! central decentral, federated, peer ???
+- !!! internetten survey bul
+- !!! CAS nerede duruyor
 
 ### Auth protokollerinin kisaca ozetleri, degerlendirme 
+#### OpenID Connect
+...
 
 ## Halihazirdaki Auth protokolleri ve DID Auth
 
 ### DID ve DID auth burada nerede duruyor
+
+### Halihazirdaki Auth protokolleri ve DID Auth
+kisalt ...  
+
+#### Self-Issued OpenID Connect Provider DID Profile v0.1
+This specification defines the "SIOP DID Profile" (SIOP DID) that is a DID AuthN flavor to use OpenID Connect (OIDC) together with the strong decentralization, privacy and security guarantees of Decentralized Identifiers (DID) for everyone who wants to have a generic way to integrate Identity Wallets into their web applications.
+
+
+- Staying backward compatible with existing OIDC clients and OPs that implement the SIOP specification which is part of the OIDC core specification as per [OIDC.Core] to reach a broader community.
+- Adding validation rules for OIDC clients that have DID AuthN support to make full use of DIDs.
+- Not relying on any intermediary such as a traditional centralized public or private OP while still being OIDC-compliant.
+
 
 ### DID ve DID auth potansiyeli
 
@@ -182,6 +205,7 @@ The purpose of DIDComm is to provide a secure, private communication methodology
 
 - !!! hyperledger aries didcomm peerdid tarihsel surec, kim kimi ortaya cikarmis
 - !!! alt basliklari tarihsel akisa gore sirala
+- aries rfcleri ietf rfclerine degin ?
 
 ### DIDComm Design Attemps
 - Secure
@@ -208,7 +232,8 @@ peer did methodu peer did nedir
 
 ### Agents
 
-### historic agents, indy-aries   
+#### historic agents, indy-aries   
+....
 
 ### Hyperledger Aries 
 - didcommm aries iliskisi, hyperlerdger arieste ortaya cikmis bir fikir
