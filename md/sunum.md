@@ -12,21 +12,16 @@ fontsize: 10pt
 
 ### Nelerden bahsedecegiz
 
-- DID core spec
-- DID-common-java
+- DID Core
+    - DID-common-java
 - DID Auth  
-- DID Communication  
+- DID Communication
 - Applications
-    - DID SIOP
+    - DID SIOP identity.foundation/did-siop/
 - Applicable Scenarios
     - DID CAS ?
     - DID PAM ?
     - DID SAML ?
-    - DIDComm Streaming ?
-    - DIDComm Multicast ?
-
-\mbox{}
-\vfill
 
 \begin{center}
   \includegraphics[width=0.2\textwidth]{./assets/license.png}
@@ -34,24 +29,67 @@ fontsize: 10pt
 
 \centering {License Attribution-ShareAlike 4.0 International}
 
-### jwt decoded
+### Decentralized Identifiers (DIDs) v1.0
+
+!!! bu spec hakkinda genel bilgiler
+
+### Identifier
+
+#### Query
+did:example:123456?query=true
+
+### DID Syntax
+- The generic DID scheme is a URI scheme conformant with [RFC3986].
+- The DID scheme name MUST be an ASCII lowercase string.
+- The DID method name MUST be an ASCII lowercase string.
+
+```
+did                = "did:" method-name ":" method-specific-id
+method-name        = 1*method-char
+method-char        = %x61-7A / DIGIT
+method-specific-id = *( *idchar ":" ) 1*idchar
+idchar             = ALPHA / DIGIT / "." / "-" / "_"
+```
+
+### DID URL Syntax
+!!! DID URL gorseli ekle
+
+```
+did-url = did path-abempty [ "?" query ] [ "#" fragment ]
+```
+
+### DID Core Properties
+
+- id 
+- authentication
+- controller
+- service
+- verificationMethod
+- assertionMethod
+- keyAgreement
+- capabilityDelegation
+- capabilityInvocation
+
+### Onemli Core Prop. tan bahset
+
+### Minimal Self-managed DID document
 
 ```json
 {
-  header: { typ: 'JWT', alg: 'ES256K' },
-  payload: {
-    iat: 1571692233,
-    exp: 1957463421,
-    aud: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74',
-    name: 'uPort Developer',
-    iss: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74'
-  },
-  signature: 'kkSmdNE9Xbiql_KCg3IptuJotm08pSEeC...',
-  data: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NkstUiJ9.
-    eyJpYXQiOjE1NzE2OT...
+  "@context": "https://www.w3.org/ns/did/v1",
+  "id": "did:example:123456789abcdefghi",
+  "authentication": [{
+    "id": "did:example:123456789abcdefghi#keys-1",
+    "type": "Ed25519VerificationKey2018",
+    "controller": "did:example:123456789abcdefghi",
+    "publicKeyBase58": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
+  }],
+  "service": [{
+    "id":"did:example:123456789abcdefghi#vcs",
+    "type": "VerifiableCredentialService",
+    "serviceEndpoint": "https://example.com/vc/"
+  }]
 }
 ```
 
 ### Sources
-
-- [Decentralized Identifiers (DIDs) fundamentals](https://docs.google.com/presentation/d/1KGLw6WThb3Q2UUOD2tZiarb_2Q_cpUZ1jzEzWCZSGII/edit#slide=id.g39e3bfd7a1_2_28)
