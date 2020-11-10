@@ -21,15 +21,19 @@ fontsize: 10pt
 - DID Core
     - DID-common-java
 - DID Auth  
-- DID Communication
-    - Peer DID ?
-    - V1 (Aries), V2 (DIF DIDcomm messaging) ?
-- Proposed Applications 
-    - DID SIOP *identity.foundation/did-siop/*
-- Similar Applicable Scenarios
-    - DID SAML (IdP)
-    - DID CAS (IdP)
-    - DID PAM
+    - rwot 2018 did auth paper
+    - DID TLS
+    - guncel
+  - DID Auth + Current Auth Protocols
+    - Proposed Applications 
+        - DID SIOP *identity.foundation/did-siop/*
+    - Similar Applicable Scenarios
+        - DID SAML (IdP)
+        - DID CAS (IdP)
+        - DID PAM
+- DID Communication ?
+  - Peer DID ?
+  - V1 (Aries), V2 (DIF DIDcomm messaging) ?
 
 ### Daha Soyut Bir giris
 !!! gereginden fazla degindigim yerler olabilir
@@ -40,6 +44,30 @@ fontsize: 10pt
 !!! oncesi 15 daki
 !!! Authentication a kadar hizli gec
 !!! json ld yi iyi anla, sunumda bahset
+!!! kimlik yontemlerini ozetleyen gorselleri ekle
+!!! didlerin kendini ispat mekanizmalari
+
+### Centralised ID
+
+\begin{center}
+  \includegraphics[width=0.8\textwidth]{./assets/central_id.png}
+\end{center}
+
+### Federated ID
+
+\begin{center}
+  \includegraphics[width=0.8\textwidth]{./assets/federated_id.png}
+\end{center}
+
+### Self-Sovereign Identity (SSI)
+
+!!! not: ssi did baglantisi notlari al
+
+!!! kisaca SSI ya degin
+
+\begin{center}
+  \includegraphics[width=0.8\textwidth]{./assets/ssi.png}
+\end{center}
 
 ### DID Core
 !!! bu spec hakkinda genel bilgiler  
@@ -148,6 +176,11 @@ did:example:1234;version-id=4#keys-1 # resolves to
 ### Identifier
 
 !!! identifier giris slayti
+!!! cevir
+
+did ve did urllerinin syntaxini inceleyecegiz, generic terimi burda tanimlanan syntaxin diger did methodlarinda tanimlanabilecek syntaxlardan ayirtd edilmek amaciyla kullanildi
+
+This section describes the formal syntax for DIDs and DID URLs. The term "generic" is used to differentiate the syntax defined here from syntax defined by specific DID methods in their respective specifications.
 
 ### DID Syntax
 
@@ -305,14 +338,87 @@ did:example:1234;service=hub/my/path?query#fragment
 
 ### id
 
+The DID subject is denoted with the ***id*** property at the top level of a DID document.
+
+- The DID subject is the entity that the DID document is about
+- DID documents **MUST** include the id property at the top level.
+
+
 ```json
 {
   "id": "did:example:21tDAKCERh95uGgKbJNHYp"
 }
 ```
+#### alsoKnownAs
+- A DID subject can have *multiple identifiers* for different purposes, or at different times.
+- The assertion that two or more DIDs (or other types of URI) identify the same DID subject can be made using the ***alsoKnownAs*** property.
 
-The value of id in the resolved DID document **MUST** match the DID that was resolved, or be populated with the equivalent canonical DID specified by the DID method, which SHOULD be used by the resolving party going forward.
+### Control
 
+!!! not: did doc may have controller, illa controller olacak diye birsey yok
+!!! not:  no longer has access to their keys, or key compromise, where the DID controller's trusted third parties need to override malicious activity by an attacker. bunu anla
+
+***Authorization*** is the mechanism used to state how operations are performed on ***behalf*** of the DID subject. ***A DID controller is authorized*** to make changes to the respective DID document.
+
+Note: Authorization vs Authentication !
+
+### DID Document With a Controller Property
+```json
+{
+  "@context": "https://www.w3.org/ns/did/v1",
+  "id": "did:example:123456789abcdefghi",
+  "controller": "did:example:bcehfew7h32f32h7af3",
+  "service": [{
+    
+    "type": "VerifiableCredentialService",
+    "serviceEndpoint": "https://example.com/vc/"
+  }]
+}
+```
+
+### Verification Methods
+
+!!! not: did controller vs verification method anla not al
+!!! not: A DID document MAY include a verificationMethod property.
+!!! not: cok detayli, her detaya gerek yok
+
+A DID document can express verification methods, such as cryptographic keys, which can be used to authenticate or authorize interactions with the DID subject or associated parties
+
+- The information expressed often includes globally unambiguous identifiers and public key material, which can be used to verify digital signatures.
+
+- In order to maximize interoperability, support for public keys as verification methods is restricted
+
+
+### verificationMethod
+
+If a DID document includes a verificationMethod property, the value of the property **MUST** be an ordered set of verification methods
+
+- The properties **MUST** include the ***id, type, controller, and specific verification method properties*** , and MAY include additional properties.
+
+- The value of the ***id*** property for a verification method **MUST be a URI**.
+
+### Example Verification Methods
+
+```json
+{
+  "@context": ["https://www.w3.org/ns/did/v1", "https://w3id.org/security/v1"],
+  "id": "did:example:123456789abcdefghi",
+  ...
+  "verificationMethod": [{
+    "id": ...,
+    "type": ...,
+    "controller": ...,
+    ...
+  }]
+}
+
+```
+
+###  Key types and formats
+
+\begin{center}
+  \includegraphics[width=1\textwidth]{./assets/key_types_and_formats.png}
+\end{center}
 
 ### Software/Tools
 !!! did core sonu ekle
@@ -325,3 +431,4 @@ The value of id in the resolved DID document **MUST** match the DID that was res
 - https://w3c-ccg.github.io/did-resolution/
 - https://github.com/WebOfTrustInfo/rwot5-boston/blob/master/topics-and-advance-readings/did-primer.md
 - https://github.com/WebOfTrustInfo/rwot6-santabarbara/blob/master/final-documents/
+- https://docs.google.com/presentation/d/1Iv98aPWuZmRwiF01VtRjYgFHrmJGK2uOu3Iq18ALWmQ/edit#slide=id.g39c3cb0292_2_265

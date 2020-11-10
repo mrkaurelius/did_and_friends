@@ -15,6 +15,10 @@
 - https://en.wikipedia.org/wiki/Federated_identity
 - https://en.wikipedia.org/wiki/MessagePack
 
+## slide
+
+- https://docs.google.com/presentation/d/1Iv98aPWuZmRwiF01VtRjYgFHrmJGK2uOu3Iq18ALWmQ/edit#slide=id.g39c3cb0292_2_51
+
 ## code 
 ### decentralized-identity/did-common-java 
 Shared DID Java library.  
