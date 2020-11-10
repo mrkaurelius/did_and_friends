@@ -136,6 +136,7 @@ Peer DID Method Specification
 ## Caveats
 
 - did resolving vs did dereferening
+- didlerin niteledigi seyler hakkinda bilgi tasimasini istemeyiz, diddoctaki nesneye dair gereksiz alanlar mahremiyeti ihlal edebilir.
 
 
 

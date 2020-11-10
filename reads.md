@@ -6,6 +6,7 @@
 - A Taxonomic Approach to Understanding Emerging Blockchain Identity Management Systemshttps://arxiv.org/pdf/1908.00929.pdf
 - How SSI Will Survive Capitalism https://github.com/WebOfTrustInfo/rwot8-barcelona/blob/master/final-documents/how-ssi-will-survive-capitalism.md
 - ssi id stack https://medium.com/decentralized-identity/the-self-sovereign-identity-stack-8a2cc95f2d45
+- did resolution https://github.com/w3c-ccg/meetings/blob/gh-pages/2020-02-20-did-resolution/did-resolution-2020-02-20.pdf
 
 ## Wiki
 - https://en.wikipedia.org/wiki/Identity_provider
