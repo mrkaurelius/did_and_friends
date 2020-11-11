@@ -1,10 +1,10 @@
 ---
-title: Decentralised IDentifiers and Friends
+title: DID-based Auth Protocols
 subtitle: Vurucu ve Akillica Alt Başlık  
 author: Abdulhamit Kumru
 date: 2020 
 theme: Dresden
-colortheme: default
+colortheme: dolphin
 institute: Blokzincir Laboratuvarı
 section-titles: false
 fontsize: 10pt
@@ -18,24 +18,49 @@ fontsize: 10pt
 
 ### Nelerden bahsedecegiz
 
-- DID Core
-    - DID-common-java
-- DID Auth  
-    - rwot 2018 did auth paper
-    - DID TLS
-    - guncel
-  - DID Auth + Current Auth Protocols
-    - Proposed Applications 
-        - DID SIOP *identity.foundation/did-siop/*
-    - Similar Applicable Scenarios
-        - DID SAML (IdP)
-        - DID CAS (IdP)
-        - DID PAM
-- DID Communication ?
-  - Peer DID ?
-  - V1 (Aries), V2 (DIF DIDcomm messaging) ?
+#### DID Core
+- w3c DID Spec
+- DID-common-java
 
-### Daha Soyut Bir giris
+#### DID Auth  
+- DID TLS (Agust 2017) *unresolved*
+- RWOT 2018 DID Auth (March 2018) 
+  - did auth paperi
+- stajda yaptiklarimiz
+  - indy-auth
+
+- did-auth-jose (October 2018, ietf, dif) *archived sept 22*
+  - Javascript Object Signing and Encryption
+  - jwt, jws, jwe
+
+- DID SIOP *identity.foundation/did-siop*
+  - calismalar buna odaklanmis durumda
+  - sonraki bolume gecis 
+
+
+### Nelerden bahsedecegiz
+
+#### Current Auth Protocols & DID Auth
+- Hali Hazirdaki Protokoller Yapilar
+  - SAML
+  - CAS
+  - OpenID Connect
+
+- Self-Issued OpenID Connect Provider DID Profile (did-siop, DIF)
+- DID SAML ?
+- DID CAS ?
+- DID Authentication on PAM 
+
+#### DID Communication ?
+- Peer DID
+- Aries (V1), DIF DIDcomm messaging (V2 )?
+
+
+# DID Core
+
+## SSI & DID Intro 
+
+### Giris Slayti
 !!! gereginden fazla degindigim yerler olabilir
 !!! giris slayti  
 !!! ikna edici bir giris hazirla  
@@ -46,6 +71,9 @@ fontsize: 10pt
 !!! json ld yi iyi anla, sunumda bahset
 !!! kimlik yontemlerini ozetleyen gorselleri ekle
 !!! didlerin kendini ispat mekanizmalari
+!!! kurumlardan bahset (w3c, dif, ietf, hypledger(linux fond.))
+!!! her specteci her MUSTi kullanmadim
+!!! bunu nereye eklemeli https://w3c.github.io/did-spec-registries/
 
 ### Centralised ID
 
@@ -61,15 +89,17 @@ fontsize: 10pt
 
 ### Self-Sovereign Identity (SSI)
 
-!!! not: ssi did baglantisi notlari al
-
+!!! not: ssi did baglantisi acikla, notlarini al
 !!! kisaca SSI ya degin
 
 \begin{center}
   \includegraphics[width=0.8\textwidth]{./assets/ssi.png}
 \end{center}
 
+## Architecture Overview
+
 ### DID Core
+!!! DID Core giris slayti
 !!! bu spec hakkinda genel bilgiler  
 
 ### Four Core Properities of DID
@@ -82,7 +112,7 @@ fontsize: 10pt
 
 ### Architecture Overview
 
-!!! not al
+!!! not: bu neyi cozuyor, strongly biding ... detay ekle, strongly binding identifier and allows key rotation
 
 \begin{center}
   \includegraphics[width=0.9\textwidth]{./assets/did_architecture_overview.png}
@@ -90,6 +120,7 @@ fontsize: 10pt
 
 
 ### DIDs and DID URLs
+\framesubtitle{Architecture Overwiew}
 
 !!! not: query ye detayli deginecegiz
 
@@ -99,6 +130,7 @@ DIDs are resolvable to DID documents. A DID URL extends the syntax of a basic DI
 
 
 ### DID Format
+\framesubtitle{Architecture Overwiew}
 
 \begin{center}
   \includegraphics[width=0.9\textwidth]{./assets/did-primer-2.png}
@@ -106,12 +138,14 @@ DIDs are resolvable to DID documents. A DID URL extends the syntax of a basic DI
 
 
 ### DID Subjects
+\framesubtitle{Architecture Overwiew}
 !!! gorsel ekle ?  
 
 The subject of a DID is, by definition, the entity identified by the DID. The DID subject may also be the DID controller. Anything can be the subject of a DID: person, group, organization, physical thing, logical thing, etc.
 
 
 ### DID Controllers
+\framesubtitle{Architecture Overwiew}
 !!! kisalt  
 !!! gorsel ekle ?  
 
@@ -119,17 +153,18 @@ The controller of a DID is the entity (person, organization, or autonomous softw
 
 
 ### Verifiable Data Registries
+\framesubtitle{Architecture Overwiew}
 !!! kisalt  
 !!! gorsel ekle ?  
 
 In order to be resolvable to DID documents, DIDs are typically recorded on an underlying system or network of some kind. Regardless of the specific technology used, any such system that supports recording DIDs and returning data necessary to produce DID documents is called a verifiable data registry. Examples include distributed ledgers, decentralized file systems, databases of any kind, peer-to-peer networks, and other forms of trusted data storage.
 
 ### DID documents
+\framesubtitle{Architecture Overwiew}
 DID documents contain metadata associated with a DID. They typically express verification methods (such as public keys) and services relevant to interactions with the DID subject.
 
 
 ### Minimal Self-managed DID document Example
-
 ```json
 {
   "@context": "https://www.w3.org/ns/did/v1",
@@ -149,9 +184,13 @@ DID documents contain metadata associated with a DID. They typically express ver
 ```
 
 ### DID Methods
+\framesubtitle{Architecture Overwiew}
+
 DID methods are the mechanism by which a particular type of DID and its associated DID document are created, resolved, updated, and deactivated using a particular verifiable data registry. DID methods are defined using separate DID method specifications.
 
 ### DID resolvers and DID resolution
+\framesubtitle{Architecture Overwiew}
+
 !!! not: detayli spec linkte, burda did res. in detayina girmeyecegiz
 
 A DID resolver is a software and/or hardware component that takes a DID (and associated input metadata) as input and produces a conforming DID document (and associated metadata) as output. This process is called DID resolution. 
@@ -173,8 +212,9 @@ did:example:1234;version-id=4#keys-1 # resolves to
 }
 ```
 
-### Identifier
+## DID Core
 
+### Identifier
 !!! identifier giris slayti
 !!! cevir
 
@@ -183,10 +223,10 @@ did ve did urllerinin syntaxini inceleyecegiz, generic terimi burda tanimlanan s
 This section describes the formal syntax for DIDs and DID URLs. The term "generic" is used to differentiate the syntax defined here from syntax defined by specific DID methods in their respective specifications.
 
 ### DID Syntax
+!!! not: buradaki notu not al
 
 - The generic DID scheme is a URI scheme conformant with [RFC3988].
-- The DID scheme name **MUST** be an ASCII lowercase string.
-- The DID method name **MUST** be an ASCII lowercase string.
+- The DID scheme and method name **MUST** be an ASCII lowercase string.
 
 ```
 # Ethr-DID
@@ -195,7 +235,6 @@ did:ethr:0xb9c5714089478a327f09197987f16f9e5d936e8a
 
 A DID is expected to be persistent and immutable. That is, a DID is bound exclusively and permanently to its one and only subject. Even after a DID is deactivated, it is intended that it never be repurposed.
 
-- aciklama nota alinabilir
 
 ### DID URL Syntax
 
@@ -207,16 +246,20 @@ A DID is expected to be persistent and immutable. That is, a DID is bound exclus
 did-url = did path-abempty [ "?" query ] [ "#" fragment ]
 ```
 ### DID Parameters
+\framesubtitle{DID URL Syntax}
 
 The DID URL syntax supports a simple format for parameters based on the query component. Adding a DID parameter to a DID URL means that the parameter becomes part of the identifier for a resource.
 
 
 ### DID Parameters
-\framesubtitle{Relative Reference}
+\framesubtitle{DID URL Syntax}
 
+#### Relative Reference
 A relative URI reference according to RFC3986 Section 4.2 that identifies a resource at a service endpoint, which is selected from a DID document by using the service parameter. Support for this parameter is **REQUIERED**
 
 ### Relative Reference Example
+\framesubtitle{DID URL Syntax}
+
 ```json
 {
   "@context": "https://www.w3.org/ns/did/v1",
@@ -233,9 +276,11 @@ A relative URI reference according to RFC3986 Section 4.2 that identifies a reso
   ]
 }
 ```
-### DID Parameters
-\framesubtitle{service }
 
+### DID Parameters
+\framesubtitle{DID URL Syntax}
+
+#### service parameter
 Identifies a service from the DID document by service ID. Support for this parameter is **REQUIRED**
 
 ```
@@ -243,28 +288,32 @@ did:foo:21tDAKCERh95uGgKbJNHYp?service=agent
 ```
 
 ### DID Parameters
-\framesubtitle{version-id}
+\framesubtitle{DID URL Syntax}
 
+#### version-id parameter
 Identifies a specific version of a DID document to be resolved (the version ID could be sequential, or a UUID, or method-specific). Support for this parameter is **OPTIONAL**
 
 ### DID Parameters
-\framesubtitle{version-time }
+\framesubtitle{DID URL Syntax}
 
+#### version-time parameter
 Identifies a certain version timestamp of a DID document to be resolved. Support for this parameter is **OPTIONAL**
 
 ```
-did:foo:21tDAKCERh95uGgKbJNHYp?version-time=2002-10-10T17:00:00Z
+did:foo:21tDKJNHYp?version-time=2002-10-10T17:00:00Z
 ```
 
 ### DID Parameters
-\framesubtitle{hl }
+\framesubtitle{DID URL Syntax}
 
 !!! not: iyi bir ozellik ama mekanizmasini tam olarak anlayamadim
 
+#### hl patameter
 A resource hash of the DID document to add integrity protection, as specified in Hashlink RFC. This parameter is *non-normative*
 
+
 ```
-# url encoded hash link
+ url encoded hash link
 hl:zm9YZpCjPLPJ4Epc:z3TSgXTuaHxY2ts...7DYuQ9QTPQyLHy
 ```
 
@@ -272,6 +321,7 @@ hl:zm9YZpCjPLPJ4Epc:z3TSgXTuaHxY2ts...7DYuQ9QTPQyLHy
 ### DID URL Syntax
 #### Path
 A DID path is identical to a generic URI path
+
 ```
 did:example:123456/path
 ```
@@ -322,8 +372,8 @@ did:example:1234;service=hub/my/path?query#fragment
 
 ### Core Properties
 
-!!! core prop giris slayti  
-!!! hepsini anlatmaya gerek yok  
+!!! core prop giris slayti
+!!! hepsini anlatmaya gerek yok
 
 - id
 - authentication
@@ -332,11 +382,11 @@ did:example:1234;service=hub/my/path?query#fragment
 - verificationMethod
 - assertionMethod
 - keyAgreement
+- capabilityDelegation
+- capabilityInvocation
 
-- capabilityDelegation ?
-- capabilityInvocation ?
-
-### id
+### id Property 
+\framesubtitle{DID Subject}
 
 The DID subject is denoted with the ***id*** property at the top level of a DID document.
 
@@ -382,48 +432,219 @@ Note: Authorization vs Authentication !
 !!! not: A DID document MAY include a verificationMethod property.
 !!! not: cok detayli, her detaya gerek yok
 
-A DID document can express verification methods, such as cryptographic keys, which can be used to authenticate or authorize interactions with the DID subject or associated parties
+A DID document can express verification methods, such as cryptographic keys, which can be used to authenticate or authorize interactions with the DID subject or associated parties. A DID document MAY include a verificationMethod property.
 
 - The information expressed often includes globally unambiguous identifiers and public key material, which can be used to verify digital signatures.
 
+- Verification methods might take many parameters. An example of this is a set of five cryptographic keys from which any three are required to contribute to a threshold signature.
+
 - In order to maximize interoperability, support for public keys as verification methods is restricted
 
+### verificationMethod Property
+\framesubtitle{Verification Methods}
 
-### verificationMethod
-
-If a DID document includes a verificationMethod property, the value of the property **MUST** be an ordered set of verification methods
+!!! not: cok detayli, her detaya gerek olmayabilir
+!!! not: notu not al, 
 
 - The properties **MUST** include the ***id, type, controller, and specific verification method properties*** , and MAY include additional properties.
 
 - The value of the ***id*** property for a verification method **MUST be a URI**.
 
-### Example Verification Methods
+**Note: Verification method controller(s) and DID controller(s)**
+
+As well as the ***verificationMethod*** property, verification methods can be embedded in or referenced from properties associated with various verification relationships
+
+### Embedding and referencing verification methods
 
 ```json
-{
-  "@context": ["https://www.w3.org/ns/did/v1", "https://w3id.org/security/v1"],
-  "id": "did:example:123456789abcdefghi",
-  ...
-  "verificationMethod": [{
-    "id": ...,
-    "type": ...,
-    "controller": ...,
-    ...
-  }]
-}
-
+{ ...  "authentication": [
+  // this key is referenced
+  it may be used with more than one verification relationship 
+  "did:example:123456789abcdefghi#keys-1",
+  // this key is embedded
+  and may *only* be used for authentication
+  {
+    "id": "did:example:123456789abcdefghi#keys-2",
+    "type": "Ed25519VerificationKey2018",
+    "controller": "did:example:123456789abcdefghi",
+    "publicKeyBase58": "H3C2AV...z3wXmqPV"
+  }
+], ... }
 ```
 
+
 ###  Key types and formats
+\framesubtitle{Verification Methods}
+
+!!! not: burada bircok issue var onlari not al
 
 \begin{center}
   \includegraphics[width=1\textwidth]{./assets/key_types_and_formats.png}
 \end{center}
 
-### Software/Tools
-!!! did core sonu ekle
 
-#### did-common-java
+### Verification Relationships
+!!! not: detaylarini not al
+
+A verification relationship expresses the relationship between the DID subject and a verification method.  
+
+Different verification relationships enable the associated verification methods to be used for different purposes
+
+### Verification Relationships
+
+#### Authentication
+!!! not: note u al, alt basliklarin detaylarini not al
+
+The ***authentication***  verification relationship is used to specify how the DID subject is expected to be authenticated, such as for the purposes of logging into a website  
+
+#### Assertion
+
+The ***assertionMethod*** verification relationship is used to specify how the DID subject is expected to express claims, such as for the purposes of issuing a Verifiable Credential
+
+#### Key Agreement
+
+The ***keyAgreement***  verification relationship is used to specify how to encrypt information to the DID subject, such as for the purposes of establishing a secure communication channel with the recipient
+
+### Verification Relationships
+
+#### Capacity Invocation 
+
+The ***capabilityInvocation*** verification relationship is used to specify a mechanism that might be used by the DID subject to invoke a cryptographic capability, such as the authorization to access an HTTP API
+
+#### Capacity Delegation
+
+The ***capabilityDelegation*** verification relationship is used to specify a mechanism that might be used by the DID subject to delegate a cryptographic capability to another party, such as delegating the authority to access a specific HTTP API to a subordinate
+
+
+### Service Endpoints
+!!! not: detaylari not al
+
+Service endpoints are used in DID documents to express ways of communicating with the DID subject or associated entities. Services listed in the DID document can contain information about privacy preserving messaging services, or more public information, such as social media accounts, personal websites, and email addresses although this is discouraged  
+
+One of the primary purposes of a DID document is to enable discovery of service endpoints. A service endpoint can be any type of service the DID subject wants to advertise, including decentralized identity management services for further discovery, authentication, authorization, or interaction
+
+### Various service endpoints
+```json
+{ // ...
+  "service": [{
+    "id": "did:example:123456789abcdefghi#openid",
+    "type": "OpenIdConnectVersion1.0Service",
+    "serviceEndpoint": "https://openid.example.com/"
+  }, {
+    "id": "did:example:123456789abcdefghi#vcr",
+    "type": "CredentialRepositoryService",
+    "serviceEndpoint": "https://repository.example.com/service/8377464"
+  }, {
+    "id": "did:example:123456789abcdefghi#xdi",
+    "type": "XdiService",
+    "serviceEndpoint": "https://xdi.example.com/8377464"
+  }]
+// ... }
+```
+
+
+### Core Representations
+!!! kisa gec  
+
+All concrete representations of a DID document are serialized using a deterministic mapping that is able to be unambiguously parsed into the data model defined in this specification
+
+Producers MUST indicate which representation of a document has been used via a media type in the document's metadata. Consumers MUST determine the representation of a DID document via the content-type DID resolver metadata field (see § 8.1 DID Resolution ), not through the content of the DID document alone.
+
+- JSON 
+- JSON-LD
+- Concise Binary Object Representation (CBOR) 
+
+
+### Methods
+!!! giris 
+
+
+### Resolution
+!!! giris 
+
+
+### Software / Repos
+!!! did core sonu ekle
+!!! repolari ekle
+
+#### dif/did-common-java
+
+
+
+
+
+
+
+
+
+# DID Auth
+
+### DID Auth Giris
+- DID TLS (Agust 2017) *unresolved*
+- RWOT 2018 DID Auth (March 2018) 
+  - did auth paperi
+- stajda yaptiklarimiz
+  - indy-auth
+
+- did-auth-jose (October 2018, ietf, dif) *archived sept 22*
+  - Javascript Object Signing and Encryption
+  - jwt, jws, jwe
+
+- DID SIOP *identity.foundation/did-siop*
+  - calismalar buna odaklanmis durumda
+  - sonraki bolume gecis 
+
+
+### DIF Authentication Working Group
+
+#### DID Authentication Profile for SIOP
+This specification defines the SIOP DID AuthN flavor to use OpenID Connect (OIDC) together with the strong decentralization, privacy and security guarantees of DID for everyone who wants to have a generic way to integrate SSI wallets into their web applications.
+
+Status: DRAFT, WIP
+Use Case: Use your identity wallet to authenticate against a Web Application
+Explainer
+Repo
+
+#### Encrypted Envelope
+This concept is borrowed from the HL Aries project to create a standardized means of authenticated general message passing between DID controllers. DIF provides an implementation of pack/unpack that intends to meet the requirements of the DIF community.
+
+Status: PROPOSAL
+Use Case: Secure communication between DID controllers.
+HL Aries Explainer
+Repo
+
+
+
+
+
+
+
+
+# Current Auth Protocols & DID Auth
+
+### Current Auth Protocols & DID Auth Giris
+
+!!! giris slayti
+
+
+- Hali Hazirdaki Protokoller Yapilar
+  - SAML
+  - CAS
+  - OpenID Connect
+
+- Self-Issued OpenID Connect Provider DID Profile (did-siop, DIF)
+- DID SAML ?
+- DID CAS ?
+- DID Authentication on PAM 
+
+- protokllerin birbiri ile iliskisi
+- protokollerin karsilastirilmasi
+- protokollerde DIDlerin kullnailmasi
+
+### Repositories
+
+- decentralized-identity/did-auth-jose
+- decentralized-identity/did-common-java
 
 ### Sources
 
