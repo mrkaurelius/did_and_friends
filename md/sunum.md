@@ -762,29 +762,41 @@ Internship Project, Application of DID Auth scenarios with DIDs using `did:sov` 
 #### Gitlab Repo
 bag.org.tr/proje/abdulhamit.kumru/indy_tls 
 
-### Presentations
+#### Presentations
 https://bag.org.tr/proje/abdulhamit.kumru/indy_tls/tree/master/presentations
 
 ### indy_auth
+sub projcets
 
 - http_signatures
 - auth_encryption
 - did_tls
 
 ### did_tls
-\framesubtitle{indy_auth}
-!!! kendi bolumum  
+\framesubtitle{indy\_auth}
+
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{./assets/lrd_seq_1.png}
+\end{center}
 
 ### did_tls
-\framesubtitle{indy_auth}
-!!! kendi bolumum  
+\framesubtitle{indy\_auth}
 
-### indy_auth
-framesubtitle{indy_auth}
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{./assets/lrd_seq_2.png}
+\end{center}
 
-#### http_signatures
+### http_signatures
+framesubtitle{indy\_auth}
 
-#### auth_encryption
+!!! kisaca  
+
+### auth encryption
+framesubtitle{indy\_auth}
+
+!!! kisaca  
+
+
 
 
 
@@ -869,11 +881,6 @@ did authn Pluggable Authentication Modullerde kullanilabilir mi ?
 ### Pluggable Authentication Module (PAM)
 !!! giris slayti  
 
-#### PAM Recepies
-- Encrypted Home Directories
-- Working with Secure Shell
-- Apache htaccess Made Smart
-- Directory Services
 
 ### Repositories
 
