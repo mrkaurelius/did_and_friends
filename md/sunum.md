@@ -74,6 +74,8 @@ fontsize: 10pt
 !!! kurumlardan bahset (w3c, dif, ietf, hypledger(linux fond.))
 !!! her specteci her MUSTi kullanmadim
 !!! bunu nereye eklemeli https://w3c.github.io/did-spec-registries/
+!!! her slaytin en az 30 saniye konusulacak materyali olmali
+!!! gorsel az kaldi gorsel eklemeye calis
 
 ### Centralised ID
 
@@ -156,6 +158,7 @@ The controller of a DID is the entity (person, organization, or autonomous softw
 \framesubtitle{Architecture Overwiew}
 !!! kisalt  
 !!! gorsel ekle ?  
+!!! ornekler ekle
 
 In order to be resolvable to DID documents, DIDs are typically recorded on an underlying system or network of some kind. Regardless of the specific technology used, any such system that supports recording DIDs and returning data necessary to produce DID documents is called a verifiable data registry. Examples include distributed ledgers, decentralized file systems, databases of any kind, peer-to-peer networks, and other forms of trusted data storage.
 
@@ -545,6 +548,7 @@ One of the primary purposes of a DID document is to enable discovery of service 
 
 ### Core Representations
 !!! kisa gec  
+!!! yeniden duzenle
 
 All concrete representations of a DID document are serialized using a deterministic mapping that is able to be unambiguously parsed into the data model defined in this specification
 
@@ -556,18 +560,80 @@ Producers MUST indicate which representation of a document has been used via a m
 
 
 ### Methods
-!!! giris 
+!!! not: Because there is no central authority for allocating or approving DID method names, there is no way to know for certain if a specific DID method name is unique  
+!!! not: The authors of a new DID method specification SHOULD use a method name that is unique among all DID method names known to them at the time of publication.  
 
+DID methods provide the means to implement did core specification on different *verifiable data registries*.
+
+- The DID method specification **MUST** specify how to generate the *method-specific-id* component of a DID.
+ 
+- The *method-specific-id* value **MUST** be able to be generated without the use of a centralized registry service.
+
+- Each DID method **MUST** define how authorization is implemented, including any necessary cryptographic operations.
+
+Note: Unique DID method names
+
+### Method Operations
+!!! not: not al
+
+#### Create
+
+The DID method specification **MUST** specify how a DID controller creates a DID and its associated DID document on the verifiable data registry, including all cryptographic operations necessary to establish proof of control.
+
+#### Read/Verify
+
+The DID method specification **MUST** specify how a DID resolver uses a DID to request a DID document from the verifiable data registry, including how the DID resolver can verify the authenticity of the response.
+
+
+### Method Operations
+!!! not: not al
+
+#### Update
+
+The DID method specification **MUST** specify how a DID controller can update a DID document on the verifiable data registry, including all cryptographic operations necessary to establish proof of control, or state that updates are not possible
+
+#### Deactivate
+
+The DID method specification **MUST** specify how a DID controller can deactivate a DID on the verifiable data registry, including all cryptographic operations necessary to establish proof of deactivation, or state that deactivation is not possible.
+
+Note: Check Out Method Security & Privacy Requirements
 
 ### Resolution
 !!! giris 
+!!! not: kesin implementasyon did core specinin disnda bundan dolayi cok detaya girmeyecegim
+!!! gorsel ekle
 
+### DID Resolution
+!!! not: detaylari not al
+The DID resolution functions resolve a DID into a DID document by using the "Read" operation of the applicable DID method. 
+
+```
+resolve ( did, did-resolution-input-metadata )
+     -> ( did-resolution-metadata, did-document,
+     did-document-metadata )
+```
+
+### DID URL Dereferencing
+!!! not: detaylari not al
+
+The DID URL dereferencing function dereferences a DID URL into a resource with contents depending on the DID URL's components, including the DID method, method-specific identifier, path, query, and fragment
+```
+dereference ( did-url, did-url-dereferencing-input-metadata )
+         -> ( did-url-dereferencing-metadata,
+         content-stream, content-metadata )
+```
+### DID URL Dereferencing
+
+\begin{center}
+  \includegraphics[width=1\textwidth]{./assets/did-url-dereferencing.png}
+\end{center}
 
 ### Software / Repos
 !!! did core sonu ekle
 !!! repolari ekle
 
 #### dif/did-common-java
+!!! burada kaldim burayi genislet
 
 
 
@@ -575,9 +641,24 @@ Producers MUST indicate which representation of a document has been used via a m
 
 
 
+# DID Authentication
+
+## Web Authentication
+
+### konular
+- authentication a giris, internet authentication, kisaca
+- https://ssimeetup.org/introduction-did-auth-markus-sabadello-webinar-10/
+
+### did auth docs
+!!! bunlari kaynaklara ekle
+- https://ldapwiki.com/wiki/DID%20Authentication#:~:text=DID%20Authentication%20(DID%20Auth)%20is,a%20DID%20and%20DID%20Description.
+- https://ssimeetup.org/introduction-did-auth-markus-sabadello-webinar-10/
+- https://github.com/WebOfTrustInfo/rwot6-santabarbara/blob/master/final-documents/did-auth.pdf
+- https://www.youtube.com/watch?v=Yq8yFYdCnxU
+- https://ssimeetup.org/introduction-did-auth-markus-sabadello-webinar-10/
 
 
-# DID Auth
+## DID Authentication RWoT VI
 
 ### DID Auth Giris
 - DID TLS (Agust 2017) *unresolved*
@@ -594,6 +675,41 @@ Producers MUST indicate which representation of a document has been used via a m
   - calismalar buna odaklanmis durumda
   - sonraki bolume gecis 
 
+- Core idea: providing control of a did
+
+### DID Auth Intro
+
+\begin{center}
+  \includegraphics[width=1\textwidth]{./assets/did-auth-intro.png}
+\end{center}
+
+### did authn and verifiable credentials
+- DID Auth and Verifiable Credentials exchange are separate.
+ At the beginning of an interaction between two parties, they need to authenticate (mutually, or just in one direction). After this is done, a protocol for exchange of Verifiable Credentials can be executed, so that the two parties can learn more about each other (and then perhaps make authorization decisions).
+
+- Verifiable Credentials exchange is an extension to (or part of) DID Auth.
+
+- DID Auth is a certain kind of Verifiable Credential.
+
+### did authn challenge
+challenge resoponse example
+```json
+{
+	"header": {
+		"typ": "JWT",
+		"alg": "ES256"
+	},
+	"payload": {
+		"iss": "did:example:123456789abcdefg",
+		"sub": "did:example:123456789abcdefg",
+		"iat": 1479850830,
+		"exp": 1511305200,
+	},
+	"signature": "..."
+}
+```
+
+### did-auth-jose
 
 ### DIF Authentication Working Group
 
@@ -653,3 +769,4 @@ Repo
 - https://github.com/WebOfTrustInfo/rwot5-boston/blob/master/topics-and-advance-readings/did-primer.md
 - https://github.com/WebOfTrustInfo/rwot6-santabarbara/blob/master/final-documents/
 - https://docs.google.com/presentation/d/1Iv98aPWuZmRwiF01VtRjYgFHrmJGK2uOu3Iq18ALWmQ/edit#slide=id.g39c3cb0292_2_265
+- https://docs.google.com/presentation/d/1vE__6RkCf0q-t8Q1Z6NKLf2D4uNxdOx-DM12KU7-MHg/edit#slide=id.g3d709bed59_2_205
