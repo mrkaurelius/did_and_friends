@@ -5,6 +5,17 @@ didcomm bunlari eskitmis sayilir mi ?
 - did exchange ?
 - did pack message ?
 
+### protocol comparison
+- CAS: simple protocol, no strong security, fits internal
+usage
+    - [protocol flow](https://apereo.github.io/cas/4.2.x/images/cas_flow_diagram.png)
+- SAML: complex protocol, very used for SaaS
+authentication, good security, well established
+- OpenID Connect: easy adoption with new technologies
+(JSON/REST/OAuth2), mobile ready, good security, still
+not wide spread
+
+
 ## Authentication of a DID
 
 Authentication of a DID: Similar to other authentication methods, DID Auth relies on a challenge-response cycle in which a relying party authenticates the DID of an identity owner. During this cycle, an identity owner demonstrates control of their authentication material that was generated and distributed during DID Record Creation through execution of the authentication-proof mechanism.

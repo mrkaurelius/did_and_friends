@@ -24,36 +24,35 @@ fontsize: 10pt
 
 #### DID Auth  
 - DID TLS (Agust 2017) *unresolved*
+
 - RWOT 2018 DID Auth (March 2018) 
-  - did auth paperi
-- stajda yaptiklarimiz
-  - indy-auth
+
+- indt_auth
 
 - did-auth-jose (October 2018, ietf, dif) *archived sept 22*
-  - Javascript Object Signing and Encryption
-  - jwt, jws, jwe
+  - Javascript Object Signing and Encryption (jwt, jws, jwe, jwa)
 
 - DID SIOP *identity.foundation/did-siop*
-  - calismalar buna odaklanmis durumda
-  - sonraki bolume gecis 
+  - Javascript Object Signing and Encryption (jwt, jws, jwe, jwa)
+  - Current Focus
 
 
 ### Nelerden bahsedecegiz
 
 #### Current Auth Protocols & DID Auth
+- web auth kisa
+- single sign on
+- single sign on ile basic auth farki
 - Hali Hazirdaki Protokoller Yapilar
   - SAML
   - CAS
   - OpenID Connect
+- karsilasitirilmalari
 
 - Self-Issued OpenID Connect Provider DID Profile (did-siop, DIF)
 - DID SAML ?
 - DID CAS ?
-- DID Authentication on PAM 
-
-#### DID Communication ?
-- Peer DID
-- Aries (V1), DIF DIDcomm messaging (V2 )?
+- DID Authentication in PAM ?
 
 
 # DID Core
@@ -629,11 +628,12 @@ dereference ( did-url, did-url-dereferencing-input-metadata )
 \end{center}
 
 ### Software / Repos
-!!! did core sonu ekle
 !!! repolari ekle
 
-#### dif/did-common-java
-!!! burada kaldim burayi genislet
+- dif/did-common-java
+- w3c/did-use-cases
+- peacekeeper/blockchain-identity
+- peacekeeper/did-imp-guide **initial phase**
 
 
 
@@ -643,56 +643,56 @@ dereference ( did-url, did-url-dereferencing-input-metadata )
 
 # DID Authentication
 
-## Web Authentication
+### DID Auth Development
 
-### konular
-- authentication a giris, internet authentication, kisaca
-- https://ssimeetup.org/introduction-did-auth-markus-sabadello-webinar-10/
-
-### did auth docs
-!!! bunlari kaynaklara ekle
-- https://ldapwiki.com/wiki/DID%20Authentication#:~:text=DID%20Authentication%20(DID%20Auth)%20is,a%20DID%20and%20DID%20Description.
-- https://ssimeetup.org/introduction-did-auth-markus-sabadello-webinar-10/
-- https://github.com/WebOfTrustInfo/rwot6-santabarbara/blob/master/final-documents/did-auth.pdf
-- https://www.youtube.com/watch?v=Yq8yFYdCnxU
-- https://ssimeetup.org/introduction-did-auth-markus-sabadello-webinar-10/
-
-
-## DID Authentication RWoT VI
-
-### DID Auth Giris
 - DID TLS (Agust 2017) *unresolved*
-- RWOT 2018 DID Auth (March 2018) 
-  - did auth paperi
-- stajda yaptiklarimiz
-  - indy-auth
+   - agentlar arasi guvenli kanal olusturma
+   - tls in cok riskli olduguna karar verildi
+
+- RWOT 6 DID Auth (March 2018) 
+    - Introduction to DID Auth
+
+
+### DID Auth Development
 
 - did-auth-jose (October 2018, ietf, dif) *archived sept 22*
-  - Javascript Object Signing and Encryption
-  - jwt, jws, jwe
+    - Javascript Object Signing and Encryption
+    - jwt, jws, jwe
 
-- DID SIOP *identity.foundation/did-siop*
-  - calismalar buna odaklanmis durumda
-  - sonraki bolume gecis 
+- DID SIOP (Sep 12, 2019, dif) *Current focus*
 
-- Core idea: providing control of a did
+- DID Authentication WG (Jan 14 2020)
+
 
 ### DID Auth Intro
+
+***Core idea: providing control of a did***
 
 \begin{center}
   \includegraphics[width=1\textwidth]{./assets/did-auth-intro.png}
 \end{center}
 
-### did authn and verifiable credentials
-- DID Auth and Verifiable Credentials exchange are separate.
- At the beginning of an interaction between two parties, they need to authenticate (mutually, or just in one direction). After this is done, a protocol for exchange of Verifiable Credentials can be executed, so that the two parties can learn more about each other (and then perhaps make authorization decisions).
+### DID Authn Challenge
+Challenge example, uPort
 
-- Verifiable Credentials exchange is an extension to (or part of) DID Auth.
+```json
+{ "typ": "JWT", "alg": "ES256K" }
+{
+  "iss": "2oeXufHGDpU51bfKBsZDdu7Je9weJ3r7sVG",
+  "iat": 1525865398,
+  "requested": [
+    "name", // ...
+  ],
+  "permissions": [ "notifications" ],
+  "callback": "https://.../api/v1/topic/Go...Bft7PZ9",
+  "exp": 1525865998,
+}
+```
 
-- DID Auth is a certain kind of Verifiable Credential.
 
-### did authn challenge
-challenge resoponse example
+### DID Authn Challenge
+Challenge resoponse example
+
 ```json
 {
 	"header": {
@@ -709,53 +709,171 @@ challenge resoponse example
 }
 ```
 
-### did-auth-jose
+### DID TLS (Agust 2017, Hyperledger) *unresolved*
+!!! not: detaylari not al
+- Using chain anchored keys to facilitate mutual authentication via TLS.
+- Extends the TLS SNI Specification and provides additional methods for certificate validation that does not rely on established Root Certificate Authorities.
+
+### DID TLS (Agust 2017, Hyperledger) *unresolved*
+
+#### Issues
+- Setting custom SNI hint from client
+- Inability to disable client certificate validation
+- Lack of certificate validation callbacks
+
+#### Future Work
+- OpenSSL: Allow non-validated client certificates. (removes signer tls sni hint requirement.)
+- OpenSSL: Add support for newer elliptic curve certificates.
+- SNI Spec: Updated to use different server_type than HostName
+- HTTP Libraries: Easier methods to specify SNI hint.
+
+### DID TLS (Agust 2017, Hyperledger) *unresolved*
+!!! not: suanki auth calismalarinin yonunden bahset  
+
+- Current Agent2Agent communication in Aries Cloud Agent is Inbound and Outbound TCP ports with *DIDcomm*
+
+- DIF Auth WG Open is currently focused on developing DID OpenID Connect Provider (did-siop)
+
+### RWOT 2018 DID Auth (March 2018) 
+
+#### did authn and verifiable credentials
+!!! yerini ayarla  
+!!! not: detaylari not al, did auth paperinda  
+!!! did auth verifiable credentials nuanslarina degin  
+
+- DID Auth and Verifiable Credentials exchange are separate.
+
+- Verifiable Credentials exchange is an extension to (or part of) DID Auth.
+
+- DID Auth is a certain kind of Verifiable Credential. bunu tamamla
+
+### RWOT 2018 DID Auth (March 2018) 
+
+### RWOT 2018 DID Auth (March 2018) 
+
+### RWOT 2018 DID Auth (March 2018) 
+
+### RWOT 2018 DID Auth (March 2018) 
+
+### indy_auth
+!!! not: stajdayken yaptigimiz proje  
+Internship Project, Application of DID Auth scenarios with DIDs using `did:sov` / Hyperledger Indy.
+
+#### Gitlab Repo
+bag.org.tr/proje/abdulhamit.kumru/indy_tls 
+
+### Presentations
+https://bag.org.tr/proje/abdulhamit.kumru/indy_tls/tree/master/presentations
+
+### indy_auth
+
+- http_signatures
+- auth_encryption
+- did_tls
+
+### did_tls
+\framesubtitle{indy_auth}
+!!! kendi bolumum  
+
+### did_tls
+\framesubtitle{indy_auth}
+!!! kendi bolumum  
+
+### indy_auth
+framesubtitle{indy_auth}
+
+#### http_signatures
+
+#### auth_encryption
+
+
+
+### did-auth-jose (October 2018, ietf, dif) *archived sept 22*
+
+### did-auth-jose (October 2018, ietf, dif) *archived sept 22*
+
+### DID SIOP *identity.foundation/did-siop*
+!!! detaylara sonra girecegiz  
+
+### DIF Authentication Working Group
+!!! burada bahsetmek uygun olmaya bilir  
+
+#### DID Authentication Profile for SIOP
+!!! not: browser extentiondan bahset  
+
+This specification defines the SIOP DID AuthN flavor to use OpenID Connect (OIDC) together with the strong decentralization, privacy and security guarantees of DID for everyone who wants to have a generic way to integrate SSI wallets into their web applications.  
+
+- Status: DRAFT, WIP
+- Use Case: Use your identity wallet to authenticate against a Web Application
 
 ### DIF Authentication Working Group
 
-#### DID Authentication Profile for SIOP
-This specification defines the SIOP DID AuthN flavor to use OpenID Connect (OIDC) together with the strong decentralization, privacy and security guarantees of DID for everyone who wants to have a generic way to integrate SSI wallets into their web applications.
-
-Status: DRAFT, WIP
-Use Case: Use your identity wallet to authenticate against a Web Application
-Explainer
-Repo
-
 #### Encrypted Envelope
-This concept is borrowed from the HL Aries project to create a standardized means of authenticated general message passing between DID controllers. DIF provides an implementation of pack/unpack that intends to meet the requirements of the DIF community.
+This concept is borrowed from the HL Aries project to create a standardized means of authenticated general message passing between DID controllers. DIF provides an implementation of pack/unpack that intends to meet the requirements of the DIF community.  
 
-Status: PROPOSAL
-Use Case: Secure communication between DID controllers.
-HL Aries Explainer
-Repo
+- Status: PROPOSAL  
+- Use Case: Secure communication between DID controllers.  
 
-
-
-
+#### decentralized-identity/DIDComm-js
+!!! pack unpack details  
+JS implementation of pack and unpack
 
 
 
+# Auth Protocols & DID Auth
 
-# Current Auth Protocols & DID Auth
+### Auth Protocols & DID Auth
+!!! giris slayti  
 
-### Current Auth Protocols & DID Auth Giris
+### Auth Protocols & DID Auth
 
-!!! giris slayti
-
-
-- Hali Hazirdaki Protokoller Yapilar
-  - SAML
-  - CAS
-  - OpenID Connect
+- SAML
+- CAS
+- OpenID Connect
 
 - Self-Issued OpenID Connect Provider DID Profile (did-siop, DIF)
 - DID SAML ?
 - DID CAS ?
 - DID Authentication on PAM 
 
-- protokllerin birbiri ile iliskisi
-- protokollerin karsilastirilmasi
-- protokollerde DIDlerin kullnailmasi
+### SSO
+
+### Understanding main SSO protocols: CAS, SAML and OpenID Connect
+- CAS: https://apereo.github.io/cas
+- SAML: https://www.oasis-open.org/standards
+- OpenID Connect : http://openid.net/developers/specs
+
+### SAML
+!!! giris slayti  
+
+### CAS
+!!! giris slayti  
+
+### OpenID Connect
+!!! giris slayti  
+
+### Protocol Comparison
+- CAS: simple protocol, no strong security, fits internal
+usage
+- SAML: complex protocol, very used for SaaS
+authentication, good security, well established
+- OpenID Connect: easy adoption with new technologies
+(JSON/REST/OAuth2), mobile ready, good security, still
+not wide spread
+
+### DID PAM
+!!! giris slayti  
+
+did authn Pluggable Authentication Modullerde kullanilabilir mi ?
+
+### Pluggable Authentication Module (PAM)
+!!! giris slayti  
+
+#### PAM Recepies
+- Encrypted Home Directories
+- Working with Secure Shell
+- Apache htaccess Made Smart
+- Directory Services
 
 ### Repositories
 
@@ -764,9 +882,4 @@ Repo
 
 ### Sources
 
-- https://www.w3.org/TR/did-core/
-- https://w3c-ccg.github.io/did-resolution/
-- https://github.com/WebOfTrustInfo/rwot5-boston/blob/master/topics-and-advance-readings/did-primer.md
-- https://github.com/WebOfTrustInfo/rwot6-santabarbara/blob/master/final-documents/
-- https://docs.google.com/presentation/d/1Iv98aPWuZmRwiF01VtRjYgFHrmJGK2uOu3Iq18ALWmQ/edit#slide=id.g39c3cb0292_2_265
-- https://docs.google.com/presentation/d/1vE__6RkCf0q-t8Q1Z6NKLf2D4uNxdOx-DM12KU7-MHg/edit#slide=id.g3d709bed59_2_205
+https://github.com/mrkaurelius/did_and_friends/blob/master/README.md
