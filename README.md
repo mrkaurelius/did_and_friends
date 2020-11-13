@@ -17,6 +17,11 @@
 - her slaytin en az 30 saniye konusulacak materyali olmali
 - gorsel az kaldi gorsel eklemeye calis
 - did autha detay eklene bilir
+- open id connect ssi baglantisini vurgula
+- open id yi detaylandir
+- oAuthu yi detaylandir
+- Cas detay ekle
+- not: neledern bahsedecegimizi genel olarak not al
 
 ### Sources 
 - https://www.w3.org/TR/did-core/

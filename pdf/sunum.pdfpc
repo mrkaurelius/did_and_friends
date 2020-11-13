@@ -1,4 +1,98 @@
 [notes]
 ### 1
 
-Deneme.
+giris### 55
+did tls feature detaylarini not al ### 56
+did TLS feature detaylari not al### 57
+
+did tls issuelari not al
+
+!!! bir alta kaydir
+suanki did auth calismalari nasil gidiyor, yonu ne, hali hazirdaki sistemlerin (open id) id auth ile beraber kullanilmasi ileride deginecegiz### 58
+suan did auth direkt tcp soketlerini kullanmak yerine did comm a kayiyor, bu konunun yine onemi olsada did comm bu ihtiyaclarin buyuk bir kismini karsilayacak gibi (auth encrypt seceneklerle rep non rep)### 60
+paradigma degisimi### 61
+did auth vs verifiable cred detaylarini not al
+
+Even though DID Auth is about proving control of a DID, the exchange of Verifiable Credentials associated with a DID is related to DID Auth. The relationship between DID Auth and Verifiable Credentials could be thought of in several conceptual ways:
+
+DID Auth and Verifiable Credentials exchange are separate: At the beginning of an interaction between two parties, they need to authenticate (mutually, or just in one direction). After this is done, a protocol for exchange of Verifiable Credentials can be executed, so that the two parties can learn more about each other (and then perhaps make authorization decisions).
+
+Verifiable Credentials exchange is an extension to (or part of) DID Auth: In this approach, proving control of an identifier, and proving possession of Verifiable Credentials are closely related, and a single protocol is used for both purposes. The Verifiable Credentials are an "optional field" in the protocol. In order to "only" prove control of an identifier, an empty set of Verifiable Credentials is exchanged.
+
+DID Auth is a certain kind of Verifiable Credential: It is possible to think of DID Auth as an exchange of the most trivial Verifiable Credential imaginable: a self-issued Verifiable Credential that states "I am me". From this perspective, the separation between DID Auth and exchange of "other" Verifiable Credentials is blurred, and both are part of a single universal protocol.
+
+### 62
+diger methodlar gibi did auth da chall resp seklinde tarflari auth eder### 63
+id ownerin challge ugramasi cesitli yontemler le olabilir### 65
+not bu auth arch bircok farkli yere uygulanabilir ileride ornekleri ile deginecegiz paperda deginmedigimiz ornekler de var### 66
+joseden bahset ilerleyen yerler de de kullanacagiz### 70
+challenge transports detaylari not al### 71
+challenge illa jwt olmak zorunda degil ### 72
+detaylari not al### 73
+did auth arch 1 not al
+
+Relying party's web page displays a QR code (with challenge) to identity owner's web browser.
+
+{ Identity owner's mobile app scans QR code (with challenge) from identity owner's web browser. }
+
+Identity owner's mobile app sends HTTP POST (with response) to relying party's web server.
+
+{ Relying party's web server is polled with HTTP GET (with response) by relying party's web page. }
+
+### 74
+did auth arch 3 not al
+
+{ Relying party's web page contains a link or button that calls the relying party's web server. }
+
+Relying party's web server sends HTTP POST (with challenge) to identity owner's DID Auth service.
+
+{ Identity owner's DID Auth service sends push notification (with challenge) to identity owner's mobile app. }
+
+Identity owner's mobile app sends HTTP POST (with response) to relying party's web server.
+
+{ Relying party's web server is polled with HTTP GET (with response) by relying party's web page. }
+
+### 75
+did auth arch 7 not al
+
+Relying party's mobile app displays a QR code (with challenge) that is scanned by identity owner's mobile app.
+
+Identity owner's mobile app sends HTTP POST (with response) to relying party's DID Auth service.
+
+{ Relying party's DID Auth service sends push notification (with response) to relying party's mobile app. }
+
+### 77
+did auth arch 5 in did siop baglantisi 
+
+OpenID Connect (OIDC) is an authentication protocol built on the OAuth 2.0 protocol. In its most common web-based form, an end-user's user agent is redirected by a relying party (OAuth 2.0 client) to an OpenID Provider (OAuth 2.0 authorization server), which authenticates the end-user and redirects them back to the relying party. The architecture resembles DID Auth Architecture 5 in this paper.
+
+OpenID Connect is highly modular and customizable. It can potentially relate to DID Auth in the following ways:
+
+{ Relying party's web page contains a link or button that calls the relying party's web server. }
+
+Relying party's web server sends HTTP Redirect (with challenge) to identity owner's web browser.
+
+{ Identity owner's web browser follows HTTP Redirect (with challenge) to identity owner's DID Auth web page. }
+
+{ Identity owner's DID Auth web page optionally interacts (with challenge and response) with identity owner's mobile app or other device. }
+
+Identity owner's DID Auth web page follows HTTP Redirect (with response) to relying party's web server.
+
+{ Relying party's web server updates relying party's web page. }
+
+
+### 78
+burdan sonra ne yapilacak### 83
+### 89
+DIF work group, detayina sonraki bolumde girecegiz, demosundan bahset, browser extension### 92
+bir uygulmaya tum credentialleri  vermek yerine sadece belirli bilgileri vermek,### 98
+id token cantains a number of required attributes or claims about that end user but olsa how authenticated### 99
+the clains in the token form part of payload 
+
+digitally signed using json web sig (integrity non repudation)
+
+header payload and signature are combined into a jwt may also be encrypted with JWE### 106
+id token kabul eden baska uyugulamalrda kullanmak mumkun, yani sso olarak ta kullanilabilir ?### 110
+bu spec browser ext/plug larada yogunlassa baska sekilde kullanilmalarini onlemiyor
+
+mesela onceden hazirlanan didlerle iki web servis bu protokolu kullanabilir

@@ -12,37 +12,24 @@ fontsize: 10pt
 
 # Auth Protocols & DID Auth
 
+## OAuth & OpenID Connect
+
 ### Auth Protocols & DID Auth
-!!! open id connect ssi baglantisini vurgula
-!!! open id yi detaylandir
-!!! oAuthu yi detaylandir
-!!! Cas detay ekle
-!!! not: neledern bahsedecegimizi genel olarak not al
 
-#### Auth Protocols & Schemes
-- OAuth
-- CAS
-- OpenID Connect
-
-#### Auth Protocols & DID Auth
+- OAuth & OpenID Connect
+- Single Sign On
 - Self-Issued OpenID Connect Provider DID Profile (did-siop, DIF)
-- DID IdP for CAS ?
-- DID Authentication in PAM ?
-
-### Auth Protocols & Schemes
-!!! not: hali hazirdaki protokollerden bahsedeceigz
-
-- OAuth
-- OpenID Connect
-- CAS
 
 ### OAuth
 !!! not: bir uygulumaya tum izinleri vermektense sadece gerekli olan izinleri vermek, ben google a login olayim ama benim google a login oldugumu goren servis sadece izin verdigim ismim ve mailimi alabilsin
 
 OAuth is an open standard for access delegation, commonly used as a way for Internet users to grant websites or applications access to their information on other websites but without giving them the passwords  
 
-- Authz protocol, doesnt provide Authentication,
-- Doesnt allow federated SSO
+### OAuth
+
+- OAuth is an authorization protocol, rather than an authentication protocol
+- OAuth is directly related to OpenID Connect (OIDC), since OIDC is an authentication layer built on top of OAuth 2.0
+- OAuth essentially allows access tokens to be issued to third-party clients by an authorization server, with the approval of the resource owner
 
 ### OAuth
 #### OpenID vs OAuth
@@ -51,15 +38,14 @@ OAuth is an open standard for access delegation, commonly used as a way for Inte
   \includegraphics[width=0.6\textwidth]{./assets/oid_vs_oauth.png}
 \end{center}
 
-
 ### OpenID Connect
-!!! not: oauth iliskisine degin
 
-- *OpenID Connect 1.0 is a simple identity layer on top of the OAuth 2.0 protocol.* It allows Clients to verify the identity of the End-User based on the authentication performed by an Authorization Server, as well as to obtain basic profile information about the End-User in an interoperable and REST-like manner
+- *OpenID Connect 1.0 is a simple identity layer on top of the OAuth 2.0 protocol.* It allows Clients to 
+verify the identity of the End-User based on the authentication performed by an Authorization Server, as well as to obtain basic profile information about the End-User in an interoperable and REST-like manner
+
+- In technical terms, OpenID Connect specifies a RESTful HTTP API, using JSON as a data format
 
 - Based on OAuth 2.0, REST, JSON, JWT, JOSE
-
-- OpenID is an open standard and decentralized authentication protocol. Promoted by the non-profit OpenID Foundation, it allows users to be authenticated by co-operating sites (known as relying parties, or RP) using a third-party service, eliminating the need for webmasters to provide their own ad hoc login systems.
 
 
 ### OpenID Connect
@@ -75,18 +61,32 @@ OAuth is an open standard for access delegation, commonly used as a way for Inte
 #### OpenID provider (OP)
 An identity provider, or OpenID provider (OP) is a service that specializes in registering OpenID URLs or XRIs. OpenID enables an end-user to communicate with a relying party  
 
-With OpenID, your password is only given to your identity provider, and that provider then confirms your identity to the websites you visit
 
+### ID Token
+\framesubtitle{OpenID Connect}
 
-### OpenID Connect
-#### ID Token
-!!! not: id token notu al
+!!! not: videodan not al
+!!! id token contains a number of required attributes or clalims about that end user but also how end user was authenticated
 
 \begin{center}
-  \includegraphics[width=0.6\textwidth]{./assets/id_token.png}
+  \includegraphics[width=0.8\textwidth]{./assets/id_token.png}
 \end{center}
 
+### JWT Token
+\framesubtitle{OpenID Connect}
+
+!!! not: videodan not al
+!!! the claims in the token form part of payload
+!!! digitally signed using json web signature (integrity non reqpudiation)
+!!! header payload and signature are combined into a jwt and may also be encrypted with JWE
+
+\begin{center}
+  \includegraphics[width=0.8\textwidth]{./assets/oidc_token_jwt.png}
+\end{center}
+
+
 ### OpenID Connect
+
 #### ID Token
 
 ```json
@@ -108,11 +108,13 @@ With OpenID, your password is only given to your identity provider, and that pro
 ```
 
 ### OpenID Connect
+
 #### Security
 - Registration between RP and OP is mandatory, can be done with public metadata exchange and selfregistration
 - JSON messages can be signed and/or encrypted with the help of asymmetric keys (public keys published in JWKS) or symmetric keys (client secret)
 
 
+## Single Sign On
 ### Single Sign On
 !!! yukardaki protokollerin tek olayi sso degil fakat genellikle bu amacla kullaniliyorlar. 
 !!! not: open id den alinan id tokenler birden fazlo uygulamada login olabilir, session acabilir yanit sso 
@@ -128,28 +130,38 @@ of SSO standards have been created:
     - CAS, SAML 2, OpenID Connect
 
 ### CAS 
-### CAS 
-
 The Central Authentication Service (CAS) is a single *sign-on* protocol for the web.
 
 Its purpose is to permit a user to access multiple applications while providing their credentials (such as userid and password) only once. It also allows web applications to authenticate users without gaining access to a user's security credentials, such as a password.
 
-### CAS 
 #### Security
 - No obligation to declare CAS clients in CAS server (open mode)
 - Trust between CAS client and CAS server relies on CAS server certificate validation
 
+
+### SAML 
+Security Assertion Markup Language is an open standard for exchanging authentication and authorization data between parties, in particular, between an identity provider and a service provider
+
+- An important use case that SAML addresses is web-browser single sign-on
+
+#### Security
+- Registration between SP and IDP is mandatory, can be done with public metadata exchange
+- XML messages can be signed and/or encrypted with the help of asymmetric keys (public keys published in metadata)
+
+#### Security
+- Registration between RP and OP is mandatory, can be done with public metadata exchange and selfregistration
+- JSON messages can be signed and/or encrypted with the help of asymmetric keys (public keys published in JWKS) or symmetric keys (client secret)
+
+
 ### Protocol Comparison
+!!! not: yani open id connect sso protokolu olarak ta one cikiyor
+!!! not: id token is gorur  
+
 - CAS: simple protocol, no strong security, fits internal usage
 - SAML: complex protocol, very used for SaaS authentication, good security, well established
-- ***OpenID Connect:*** easy adoption with new technologies (JSON/REST/OAuth2), mobile ready, good security, *still not wide spread
+- ***OpenID Connect:*** easy adoption with new technologies (JSON/REST/OAuth2), mobile ready, good security, still not wide spread
 
-
-### Auth Protocols & DID Auth
-
-- Self-Issued OpenID Connect Provider DID Profile (did-siop, DIF)
-- DID IdP for CAS ?
-- DID Authentication on PAM ?
+## Self-Issued OpenID Connect Provider DID Profile (did-siop, DIF)
 
 ### self-issued openid connect provider
 !!! not: Self-Issued OpenID Connect Provider bunu acikla, protokolde ne gibi farkliliklara yol acabilir
@@ -165,9 +177,8 @@ Its purpose is to permit a user to access multiple applications while providing 
 ***The work on DIF SIOP DID Profile specification has moved to OIDF AB WG to work on a new SIOP v2 specification that will either introduce breaking changes to the DIF SIOP DID Profile specification or will replace it with an implementation guide document on how to use SIOP v2 in an SSI context.***
 
 
-### DID SIOP
-
-#### Terminology
+### DID SIOP Terminology
+\framesubtitle{DID SIOP}
 
 \begin{center}
   \includegraphics[width=0.9\textwidth]{./assets/siop_term.png}
@@ -175,6 +186,7 @@ Its purpose is to permit a user to access multiple applications while providing 
 
 ### Introduction
 \framesubtitle{DID SIOP}
+
 !!! not: While this specification focuses on the integration of Identity Wallets in the form of browser extensions/ plugins, or smartphone apps, it does not prevent implementers using the proposed flow in different scenarios as well, e.g., between two web services with pre-populated DIDs.
 !!! not: cevir, nota ekle
 
@@ -183,6 +195,8 @@ An everyday use case that the Decentralized Identity community identified is the
 ### Introduction
 \framesubtitle{DID SIOP}
 
+!!! not: While this specification focuses on the integration of Identity Wallets in the form of browser extensions/ plugins, or smartphone apps, it does not prevent implementers using the proposed flow in different scenarios as well, e.g., between two web services with pre-populated DIDs.
+
 #### Purpose
 The main purpose is to sign up with/ login to an RP (Relaying Party), i.e., web application. It assumes the user operates a mobile or desktop browser or a browser-based app that can respond to SIOP requests according to this specification.
 
@@ -190,7 +204,6 @@ The main purpose is to sign up with/ login to an RP (Relaying Party), i.e., web 
 - Staying backward compatible with existing OIDC clients and OPs (OpenID Provider) that implement the SIOP specification which is part of the OIDC core specification as per [OIDC.Core] to reach a broader community.
 - Adding validation rules for OIDC clients that have DID AuthN support to make full use of DIDs.
 - Not relying on any intermediary such as a traditional centralized public or private OP while still being OIDC-compliant.
-
 
 ### Protocol Flow
 \framesubtitle{DID SIOP}
@@ -202,14 +215,15 @@ The main purpose is to sign up with/ login to an RP (Relaying Party), i.e., web 
 ### Protocol Flow
 \framesubtitle{DID SIOP}
 !!! not: detaylari anla not al
+!!! not: turkcelerini not al
 
-- Unlike the OIDC Authorization Code Flow as per [OIDC.Core], the SIOP will not return an access token to the RP
+- Unlike the OIDC Authorization Code Flow as per [OIDC.Core], the **SIOP will not return an access token to the RP**
 
-- SIOP also differs from Authorization Code Flow by not relying on a centralized and known OP. The SIOP can be unknown to the RP until the user starts to interact with the RP using its Identity Wallet 
+- **SIOP also differs from Authorization Code Flow by not relying on a centralized and known OP**. The SIOP can be unknown to the RP until the user starts to interact with the RP using its Identity Wallet 
 
--  OIDC Authorization Code Flow is still a useful approach and should be used whenever the OP is known, and OP discovery is possible, e.g., exchanged or pre-populated DID Document containing an openid element in the service section.
+-  OIDC Authorization Code Flow is *still a useful approach* and *should be used whenever the OP is known, and OP discovery is possible, e.g.*, exchanged or pre-populated DID Document containing an openid element in the service section.
 
-- The SIOP flow allows to integrate Identity Wallets with plain OIDC clients if they implemented the SIOP specification. In contrast, using DID AuthN as the authentication means in the OIDC Authorization Code Flow would require integration with the OP vendor itself.
+- *The SIOP flow allows to integrate Identity Wallets with plain OIDC clients if they implemented the SIOP specification*. In contrast, using DID AuthN as the authentication means in the OIDC Authorization Code Flow would *require integration with the OP vendor itself*.
 
 
 ### Protocol Flow
@@ -227,20 +241,3 @@ The main purpose is to sign up with/ login to an RP (Relaying Party), i.e., web 
 \begin{center}
   \includegraphics[width=0.75\textwidth]{./assets/did_authn_siop_profile_flow_2.png}
 \end{center}
-
-### DID PAM
-!!! not: bu bolumleri tartisma soru seklinde yap ve bitir
-
-### Pluggable Authentication Module (PAM)
-!!! not: bu bolumleri tartisma soru seklinde yap ve bitir, normalde saml da olcakti fakat karisik oldugu icin gectim
-
-did authn Pluggable Authentication Modullerde kullanilabilir mi ?
-
-### PAM Recepies
-- Encrypted Home Directories
-- Working with Secure Shell
-- Apache htaccess Made Smart
-- Directory Services
-
-### DID IdP for CAS ?
-!!! not: bu bolumleri tartisma soru seklinde yap ve bitir

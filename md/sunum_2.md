@@ -12,23 +12,22 @@ fontsize: 10pt
 
 # DID Authentication
 
+## Pre RWoT VI
+
 ### DID Auth Development
 
 - DID TLS (Agust 2017) *unresolved*
-   - TLS mutual Auth with DIDs
+    - TLS mutual Auth with DIDs
 
 - RWOT 6 DID Auth (March 2018) 
     - Introduction to DID Auth
 
 ### DID Auth Development
 
-- did-auth-jose (October 2018, ietf, dif) *archived sept 22*
-
-- DID SIOP (Sep 12, 2019, dif) *Current focus*
-  - successor of did-auth-jose
-
 - DID Authentication WG (Jan 14 2020)
-
+    - did-auth-jose (October 2018, DIF) *archived sept 22*
+    - DID SIOP (Sep 12, 2019, DIF) *Current focus*
+        - successor of did-auth-jose
 
 ### DID TLS (Agust 2017, Hyperledger) *unresolved*
 !!! not: detaylari not al  
@@ -44,7 +43,7 @@ DID TLS feature proposed as indy SDK feature.
 ### DID TLS (Agust 2017, Hyperledger) *unresolved*
 
 #### Issues
-!!! not: detaylari not al  
+!!! not: dokumandan detaylari not al   
 
 - Setting custom SNI hint from client
 - Inability to disable client certificate validation
@@ -62,21 +61,27 @@ DID TLS feature proposed as indy SDK feature.
 - Current Agent2Agent communication in Aries Cloud Agent is Inbound and Outbound TCP ports with *DIDcomm*
 - DIF Auth WG Open is currently focused on developing DID OpenID Connect Provider (did-siop)
 
+## RWoT VI
+
 ### Rebooting Web-of-Trust (RWoT) 6 DID Auth 
-!!! not: bu specte sonlara dogru did siop a goz kirpmalar basliyor
 
-***Core idea: providing control of a did***
+#### Abstract
 
-- Definition of DID Auth term
-- DID Auth defines data formats and challenge and response transports allowing an identity owner to prove control of a DID to a relying party
+*The term DID Auth has been used in different ways and is currently not well-defined.*  
 
+*We define DID Auth as a ceremony where an identity owner, with the help of various components such as web browsers, mobile devices, and other agents, proves to a relying party that they are in control of a DID*  
+
+***Core idea: proving control of a DID to relying party***
+
+### Owner vs. Controller
+\framesubtitle{RWoT 6 DID Auth}
+
+*This paper heavily uses the term identity owner. This helps to emphasize clearly how DID Auth is fundamentally different from earlier authentication protocols, which have traditionally revolved around "identity providers".*
 
 ### DID Authn and Verifiable Credentials
 \framesubtitle{RWoT 6 DID Auth}
 
-!!! yerini ayarla  
 !!! not: detaylari not al, did auth paperinda  
-!!! did auth vs verifiable credentials nuanslarina degin  
 
 - DID Auth and Verifiable Credentials exchange are separate.
 - Verifiable Credentials exchange is an extension to (or part of) DID Auth.
@@ -88,8 +93,15 @@ DID TLS feature proposed as indy SDK feature.
 #### Authentication of a DID
 Similar to other authentication methods, DID Auth relies on a challenge-response cycle in which a relying party authenticates the DID of an identity owner.
 
-#### Challenge
+### Challenge
+\framesubtitle{RWoT 6 DID Auth}
+
 The way an identity owner or their agent encounters an authentication challenge, as well as the format of the challenge, will vary depending on the situation. For example, they can come across a "Sign in with DID Auth" button or a QR code on a website
+
+### Response
+\framesubtitle{RWoT 6 DID Auth}
+
+Based on the challenge, the identity owner then constructs a response that proves control of their DID. This often involves a cryptographic signature, but can include other proof mechanisms. (As mentioned earlier, the response may also contain Verifiable Credentials that the relying party asked for in the challenge.)
 
 ### Generic DID Auth Architecture
 !!! not: bu auth arch bircok farkli yerde uygulanabilir, ornek olarak ... 
@@ -163,7 +175,7 @@ A DID Auth challenge may be delivered by a relying party to an identity owner in
 
 ### DID Authn Challenge
 \framesubtitle{RWoT 6 DID Auth}
-!!! not: challange illa jwt olmak zorunda degil
+!!! not: challange illa jwt olmak zorunda degil, baska yontemler de olabilir (json ld vc)
 
 JWT challenge resoponse example
 
@@ -243,6 +255,11 @@ OpenID Connect (OIDC) is an authentication protocol built on the OAuth 2.0 proto
   \includegraphics[width=0.75\textwidth]{./assets/DID_Auth_Diagrams5.png}
 \end{center}
 
+### Next Steps
+\framesubtitle{RWoT 6 DID Auth}
+- Agree on scope of DID Auth.
+- Agree on supported formats for challenges and responses.
+- Agree on supported protocols and flows.
 
 ### indy_auth
 !!! not: stajdayken yaptigimiz proje  
@@ -259,17 +276,20 @@ https://bag.org.tr/proje/abdulhamit.kumru/indy_tls/tree/master/presentations
 ### indy_auth
 !!! not: icerdigi alt projeler, proof of concept nitelidinde calismalar. 
 
+!!! indy kullanarak did auth calismalari yapildi
+
 #### did_tls 
+\framesubtitle{indy\_auth}
 
 - Generic DID Auth over TCP using generic JSON Object
 - DH Session key generated 
 - TLS Socket created.
 
 #### Tools
-- Python OpenSSL 
+- Python ssl 
 - indy-sdk
 
-#### Other works
+#### Other Works
 
 - http signatures
 - auth encryption
@@ -286,6 +306,14 @@ The major artifact of the SDK is a C-callable library that provides the basic bu
 #### Libindy wrappers
 A set of libindy wrappers for developing Indy-based applications in your favorite programming language
 
+### indy-sdk overview
+\framesubtitle{indy\_auth}
+
+\begin{center}
+  \includegraphics[width=0.8\textwidth]{./assets/sdk-overview.png}
+\end{center}
+
+
 ### did_tls
 \framesubtitle{indy\_auth}
 
@@ -300,19 +328,47 @@ A set of libindy wrappers for developing Indy-based applications in your favorit
   \includegraphics[width=0.5\textwidth]{./assets/lrd_seq_2.png}
 \end{center}
 
-### did-auth-jose (October 2018, ietf, dif) *archived sept 22*
-did-auth-jose is a library that provides JOSE encryption, decryption, signing, and verifying capabilities through a key and algorithm extensible model, as well as two authentication flows for use with decentralized identities (DIDs).  
+## DIF
+
+
+### Decentralized Identity Foundation (DIF)
+Provide a neutral and inclusive place for the decentralized identity community to collaborate
+
+#### Working Groups
+
+- Authentication
+- Claims and Credentials
+- DID Communication
+- ...
+
+
+### did-auth-jose (October 2018, DIF) *archived sept 22*
+did-auth-jose is a library that provides JOSE (Javascript Object Signing and Encryption) encryption, decryption, signing, and verifying capabilities through a key and algorithm extensible model, as well as two authentication flows for use with decentralized identities (DIDs).  
 
 *evolved to did-siop*
-#### OIDC Authentication Flow
 
+### Authentication Flow
+\framesubtitle{did-auth-jose}
+
+DID Authentication uses two to three JSON Web Tokens (JWT) per request.
+
+The first is an outer JSON Web Encryption (JWE), and the second is an inner JSON Web Signature (JWS), both utilizing the public private key pair of each DID retrieved from their DID Document.
+
+An optional third JWT access token may be included in a JWS header. This format ensures the content is encrypted end to end and independently verifiable. Each JWS contains a nonce header to associate requests with responses
+
+
+### Authentication Flow
+\framesubtitle{did-auth-jose}
+
+\begin{center}
+  \includegraphics[width=0.75\textwidth]{./assets/authFlow.png}
+\end{center}
 
 ### DIF Authentication Working Group (Jan 14 2020)
-!!! not: did auth a bu arkadaslar bakiyor
 
 #### DID Authentication Profile for SIOP
 !!! not: browser extentiondan bahset  
-!!! not: not al
+!!! not: not al  
 !!! detaylara bir sonraki bolumde girecegiz  
 
 SIOP DID AuthN flavor to use OpenID Connect (OIDC) together with the strong decentralization, privacy and security guarantees of DID for everyone who wants to have a generic way to integrate SSI wallets into their web applications.  
@@ -331,6 +387,4 @@ This concept is borrowed from the HL Aries project to create a standardized mean
 - Use Case: Secure communication between DID controllers.  
 
 #### decentralized-identity/DIDComm-js
-!!! pack unpack details  
-JS implementation of pack and unpack
-
+Javascript version of the cryptographic envelope of DIDComm (pack, unpack).
