@@ -628,14 +628,8 @@ dereference ( did-url, did-url-dereferencing-input-metadata )
 \end{center}
 
 ### Software / Repos
-!!! repolari ekle
 
 - dif/did-common-java
-- w3c/did-use-cases
-- peacekeeper/blockchain-identity
-- peacekeeper/did-imp-guide **initial phase**
-
-
 
 
 
@@ -646,34 +640,123 @@ dereference ( did-url, did-url-dereferencing-input-metadata )
 ### DID Auth Development
 
 - DID TLS (Agust 2017) *unresolved*
-   - agentlar arasi guvenli kanal olusturma
-   - tls in cok riskli olduguna karar verildi
+   - TLS mutual Auth with DIDs
 
 - RWOT 6 DID Auth (March 2018) 
     - Introduction to DID Auth
 
-
 ### DID Auth Development
 
 - did-auth-jose (October 2018, ietf, dif) *archived sept 22*
-    - Javascript Object Signing and Encryption
-    - jwt, jws, jwe
 
 - DID SIOP (Sep 12, 2019, dif) *Current focus*
+  - successor of did-auth-jose
 
 - DID Authentication WG (Jan 14 2020)
 
 
-### DID Auth Intro
+### DID TLS (Agust 2017, Hyperledger) *unresolved*
+!!! not: detaylari not al  
+DID TLS feature proposed as indy SDK feature. 
+
+- Using chain anchored keys to facilitate mutual authentication via TLS.
+- Extends the TLS SNI Specification and provides additional methods for certificate validation that does not rely on established Root Certificate Authorities.
+
+#### Links
+- github.com/TelegramSam/DID-TLS
+- jira.hyperledger.org/browse/IS-268
+
+### DID TLS (Agust 2017, Hyperledger) *unresolved*
+
+#### Issues
+!!! not: detaylari not al  
+
+- Setting custom SNI hint from client
+- Inability to disable client certificate validation
+- Lack of certificate validation callbacks
+
+#### Future Work
+- OpenSSL: Allow non-validated client certificates. (removes signer tls sni hint requirement.)
+- OpenSSL: Add support for newer elliptic curve certificates.
+- SNI Spec: Updated to use different server_type than HostName
+- HTTP Libraries: Easier methods to specify SNI hint.
+
+### DID TLS (Agust 2017, Hyperledger) *unresolved*
+!!! not: suanki auth calismalarinin yonunden bahset  
+
+- Current Agent2Agent communication in Aries Cloud Agent is Inbound and Outbound TCP ports with *DIDcomm*
+- DIF Auth WG Open is currently focused on developing DID OpenID Connect Provider (did-siop)
+
+### Rebooting Web-of-Trust (RWoT) 6 DID Auth 
+!!! not: bu specte sonlara dogru did siop a goz kirpmalar basliyor
 
 ***Core idea: providing control of a did***
+
+- Definition of DID Auth term
+- DID Auth defines data formats and challenge and response transports allowing an identity owner to prove control of a DID to a relying party
+
+
+### DID Authn and Verifiable Credentials
+\framesubtitle{RWoT 6 DID Auth}
+
+!!! yerini ayarla  
+!!! not: detaylari not al, did auth paperinda  
+!!! did auth vs verifiable credentials nuanslarina degin  
+
+- DID Auth and Verifiable Credentials exchange are separate.
+- Verifiable Credentials exchange is an extension to (or part of) DID Auth.
+- DID Auth is a certain kind of Verifiable Credential. bunu tamamla
+
+### Authentication of a DID
+\framesubtitle{RWoT 6 DID Auth}
+
+#### Authentication of a DID
+Similar to other authentication methods, DID Auth relies on a challenge-response cycle in which a relying party authenticates the DID of an identity owner.
+
+#### Challenge
+The way an identity owner or their agent encounters an authentication challenge, as well as the format of the challenge, will vary depending on the situation. For example, they can come across a "Sign in with DID Auth" button or a QR code on a website
+
+### Generic DID Auth Architecture
+!!! not: bu auth arch bircok farkli yerde uygulanabilir, ornek olarak ... 
 
 \begin{center}
   \includegraphics[width=1\textwidth]{./assets/did-auth-intro.png}
 \end{center}
 
+### Javascript Object Signing and Encryption (JOSE)
+!!! not: jose den kisaca bahsetmek lazim diduth ve sonraki yerlerde siklikla kullaniliyor, bahsedecegiz.  
+
+- Used in DID Auth and DID SIOP
+- Adapted in many similar area 
+
+#### JSON Web Algorithms (JWA)
+JWA specification registers cryptographic algorithms and identifiers to be used with the JSON Web Signature (JWS), JSON Web Encryption (JWE), and JSON Web Key (JWK) specifications
+
+#### JSON Web Signature (JWS)
+JSON Web Signature (JWS) represents content secured with digital signatures or Message Authentication Codes (MACs) using JSON-based data structures
+
+### Javascript Object Signing and Encryption (JOSE)
+
+#### JSON Web Encryption (JWE)
+JSON Web Encryption (JWE) represents encrypted content using JSON-based data structures
+
+#### JSON Web Key (JWK)
+A JSON Web Key (JWK) is a JavaScript Object Notation (JSON) data structure that represents a cryptographic key
+
+#### JSON Web Token (JWT)
+JSON Web Token (JWT) is a compact, URL-safe means of representing claims to be transferred between two parties.
+
+
+### Javascript Object Signing and Encryption (JOSE)
+
+\begin{center}
+  \includegraphics[width=1\textwidth]{./assets/jose.png}
+\end{center}
+
 ### DID Authn Challenge
-Challenge example, uPort
+\framesubtitle{RWoT 6 DID Auth}
+
+JWT challenge example, uPort
 
 ```json
 { "typ": "JWT", "alg": "ES256K" }
@@ -689,9 +772,25 @@ Challenge example, uPort
 }
 ```
 
+### Challenge Transports
+\framesubtitle{RWoT 6 DID Auth}
+!!! not: detaylari not al
+
+A DID Auth challenge may be delivered by a relying party to an identity owner in different ways. DID Auth defines a few common ways that this can be done.
+
+- DID Auth Service Endpoint
+- Custom Protocol Handler
+- Mobile Deep Link
+- Custom Protocol Handler
+- Invoke User Agent's JavaScript API
+- Form Redirect
+- Device-to-device Communication
 
 ### DID Authn Challenge
-Challenge resoponse example
+\framesubtitle{RWoT 6 DID Auth}
+!!! not: challange illa jwt olmak zorunda degil
+
+JWT challenge resoponse example
 
 ```json
 {
@@ -700,7 +799,7 @@ Challenge resoponse example
 		"alg": "ES256"
 	},
 	"payload": {
-		"iss": "did:example:123456789abcdefg",
+		"iss": "did:example:123456789abcdefg", 
 		"sub": "did:example:123456789abcdefg",
 		"iat": 1479850830,
 		"exp": 1511305200,
@@ -709,54 +808,71 @@ Challenge resoponse example
 }
 ```
 
-### DID TLS (Agust 2017, Hyperledger) *unresolved*
+### Response Transports
+\framesubtitle{RWoT 6 DID Auth}
+!!! not: detaylari not al  
+
+- HTTP POST to Callback URL
+- Scan QR Code from Mobile App
+- Fulfill JavaScript Promise
+- Device-to-device Communication
+
+###  Auth Architecture Web page and mobile app
+\framesubtitle{RWoT 6 DID Auth}
+
+!!! Auth architecture gorselleri ekle
 !!! not: detaylari not al
-- Using chain anchored keys to facilitate mutual authentication via TLS.
-- Extends the TLS SNI Specification and provides additional methods for certificate validation that does not rely on established Root Certificate Authorities.
 
-### DID TLS (Agust 2017, Hyperledger) *unresolved*
+\begin{center}
+  \includegraphics[width=0.75\textwidth]{./assets/DID_Auth_Diagrams1.png}
+\end{center}
 
-#### Issues
-- Setting custom SNI hint from client
-- Inability to disable client certificate validation
-- Lack of certificate validation callbacks
+###  Auth Architecture Web page and DID Auth service
+\framesubtitle{RWoT 6 DID Auth}
 
-#### Future Work
-- OpenSSL: Allow non-validated client certificates. (removes signer tls sni hint requirement.)
-- OpenSSL: Add support for newer elliptic curve certificates.
-- SNI Spec: Updated to use different server_type than HostName
-- HTTP Libraries: Easier methods to specify SNI hint.
+!!! Auth architecture gorselleri ekle
+!!! not: detaylari not al
 
-### DID TLS (Agust 2017, Hyperledger) *unresolved*
-!!! not: suanki auth calismalarinin yonunden bahset  
+\begin{center}
+  \includegraphics[width=0.75\textwidth]{./assets/DID_Auth_Diagrams3.png}
+\end{center}
 
-- Current Agent2Agent communication in Aries Cloud Agent is Inbound and Outbound TCP ports with *DIDcomm*
+###  Auth Architecture Mobile apps and DID Auth services
+\framesubtitle{RWoT 6 DID Auth}
 
-- DIF Auth WG Open is currently focused on developing DID OpenID Connect Provider (did-siop)
+!!! Auth architecture gorselleri ekle
+!!! not: detaylari not al
 
-### RWOT 2018 DID Auth (March 2018) 
+\begin{center}
+  \includegraphics[width=0.75\textwidth]{./assets/DID_Auth_Diagrams7.png}
+\end{center}
 
-#### did authn and verifiable credentials
-!!! yerini ayarla  
-!!! not: detaylari not al, did auth paperinda  
-!!! did auth verifiable credentials nuanslarina degin  
 
-- DID Auth and Verifiable Credentials exchange are separate.
+### Relation to Other Technologies
+\framesubtitle{RWoT 6 DID Auth}
+!!! not: detaylara notta degin, diger teknolijer ile baglantisi, uygulanabilirligi
 
-- Verifiable Credentials exchange is an extension to (or part of) DID Auth.
+- Other Public Key Infrastructure (PGP, SSH, etc.)
+- WebAuthn (FIDO Authentication)
 
-- DID Auth is a certain kind of Verifiable Credential. bunu tamamla
+#### OpenID Connect *(DIF Auth Current Focus)*
+!!! not: burayi iyi anla not al 
 
-### RWOT 2018 DID Auth (March 2018) 
+OpenID Connect (OIDC) is an authentication protocol built on the OAuth 2.0 protocol. In its most common web-based form, an end-user's user agent is redirected by a relying party (OAuth 2.0 client) to an OpenID Provider (OAuth 2.0 authorization server), which authenticates the end-user and redirects them back to the relying party.
 
-### RWOT 2018 DID Auth (March 2018) 
+### Relation to Other Technologies 
+\framesubtitle{RWoT 6 DID Auth}
+!!! not: aciklamayi not al
 
-### RWOT 2018 DID Auth (March 2018) 
+\begin{center}
+  \includegraphics[width=0.75\textwidth]{./assets/DID_Auth_Diagrams5.png}
+\end{center}
 
-### RWOT 2018 DID Auth (March 2018) 
 
 ### indy_auth
 !!! not: stajdayken yaptigimiz proje  
+!!! basettigimiz kavramlari teknolojileri anlamak icin gelistirdigimiz projemiz.
+
 Internship Project, Application of DID Auth scenarios with DIDs using `did:sov` / Hyperledger Indy.
 
 #### Gitlab Repo
@@ -766,11 +882,34 @@ bag.org.tr/proje/abdulhamit.kumru/indy_tls
 https://bag.org.tr/proje/abdulhamit.kumru/indy_tls/tree/master/presentations
 
 ### indy_auth
-sub projcets
+!!! not: icerdigi alt projeler, proof of concept nitelidinde calismalar. 
 
-- http_signatures
-- auth_encryption
-- did_tls
+#### did_tls 
+
+- Generic DID Auth over TCP using generic JSON Object
+- DH Session key generated 
+- TLS Socket created.
+
+#### Tools
+- Python OpenSSL 
+- indy-sdk
+
+#### Other works
+
+- http signatures
+- auth encryption
+
+### indy-sdk
+\framesubtitle{indy\_auth}
+!!! not: not ekle
+
+Everything needed to build applications that interact with an Indy distributed identity ledger.
+
+#### libindy
+The major artifact of the SDK is a C-callable library that provides the basic building blocks for the creation of applications on the top of Hyperledger Indy
+
+#### Libindy wrappers
+A set of libindy wrappers for developing Indy-based applications in your favorite programming language
 
 ### did_tls
 \framesubtitle{indy\_auth}
@@ -786,39 +925,29 @@ sub projcets
   \includegraphics[width=0.5\textwidth]{./assets/lrd_seq_2.png}
 \end{center}
 
-### http_signatures
-framesubtitle{indy\_auth}
-
-!!! kisaca  
-
-### auth encryption
-framesubtitle{indy\_auth}
-
-!!! kisaca  
-
-
-
-
-
 ### did-auth-jose (October 2018, ietf, dif) *archived sept 22*
+did-auth-jose is a library that provides JOSE encryption, decryption, signing, and verifying capabilities through a key and algorithm extensible model, as well as two authentication flows for use with decentralized identities (DIDs).  
 
-### did-auth-jose (October 2018, ietf, dif) *archived sept 22*
+*evolved to did-siop*
+#### OIDC Authentication Flow
 
-### DID SIOP *identity.foundation/did-siop*
-!!! detaylara sonra girecegiz  
 
-### DIF Authentication Working Group
-!!! burada bahsetmek uygun olmaya bilir  
+### DIF Authentication Working Group (Jan 14 2020)
+!!! not: did auth a bu arkadaslar bakiyor
 
 #### DID Authentication Profile for SIOP
 !!! not: browser extentiondan bahset  
+!!! not: not al
+!!! detaylara bir sonraki bolumde girecegiz  
 
-This specification defines the SIOP DID AuthN flavor to use OpenID Connect (OIDC) together with the strong decentralization, privacy and security guarantees of DID for everyone who wants to have a generic way to integrate SSI wallets into their web applications.  
+SIOP DID AuthN flavor to use OpenID Connect (OIDC) together with the strong decentralization, privacy and security guarantees of DID for everyone who wants to have a generic way to integrate SSI wallets into their web applications.  
 
 - Status: DRAFT, WIP
 - Use Case: Use your identity wallet to authenticate against a Web Application
 
-### DIF Authentication Working Group
+SIOP DID is an unapproved DIF working group draft specification being developed within the Decentralized Identity Foundation (DIF).  
+
+### DIF Authentication Working Group (Jan 14 2020)
 
 #### Encrypted Envelope
 This concept is borrowed from the HL Aries project to create a standardized means of authenticated general message passing between DID controllers. DIF provides an implementation of pack/unpack that intends to meet the requirements of the DIF community.  
@@ -832,61 +961,239 @@ JS implementation of pack and unpack
 
 
 
+
+
 # Auth Protocols & DID Auth
 
 ### Auth Protocols & DID Auth
-!!! giris slayti  
+!!! open id connect ssi baglantisini vurgula
+!!! open id yi detaylandir
+!!! oAuthu yi detaylandir
+!!! Cas detay ekle
+!!! not: neledern bahsedecegimizi genel olarak not al
 
-### Auth Protocols & DID Auth
-
-- SAML
+#### Auth Protocols & Schemes
+- OAuth
 - CAS
 - OpenID Connect
 
+#### Auth Protocols & DID Auth
 - Self-Issued OpenID Connect Provider DID Profile (did-siop, DIF)
-- DID SAML ?
-- DID CAS ?
-- DID Authentication on PAM 
+- DID IdP for CAS ?
+- DID Authentication in PAM ?
 
-### SSO
+### Auth Protocols & Schemes
+!!! not: hali hazirdaki protokollerden bahsedeceigz
 
-### Understanding main SSO protocols: CAS, SAML and OpenID Connect
-- CAS: https://apereo.github.io/cas
-- SAML: https://www.oasis-open.org/standards
-- OpenID Connect : http://openid.net/developers/specs
+- OAuth
+- OpenID Connect
+- CAS
 
-### SAML
-!!! giris slayti  
+### OAuth
+!!! not: bir uygulumaya tum izinleri vermektense sadece gerekli olan izinleri vermek, ben google a login olayim ama benim google a login oldugumu goren servis sadece izin verdigim ismim ve mailimi alabilsin
 
-### CAS
-!!! giris slayti  
+OAuth is an open standard for access delegation, commonly used as a way for Internet users to grant websites or applications access to their information on other websites but without giving them the passwords  
+
+- Authz protocol, doesnt provide Authentication,
+- Doesnt allow federated SSO
+
+### OAuth
+#### OpenID vs OAuth
+
+\begin{center}
+  \includegraphics[width=0.6\textwidth]{./assets/oid_vs_oauth.png}
+\end{center}
+
 
 ### OpenID Connect
-!!! giris slayti  
+!!! not: oauth iliskisine degin
+
+- *OpenID Connect 1.0 is a simple identity layer on top of the OAuth 2.0 protocol.* It allows Clients to verify the identity of the End-User based on the authentication performed by an Authorization Server, as well as to obtain basic profile information about the End-User in an interoperable and REST-like manner
+
+- Based on OAuth 2.0, REST, JSON, JWT, JOSE
+
+- OpenID is an open standard and decentralized authentication protocol. Promoted by the non-profit OpenID Foundation, it allows users to be authenticated by co-operating sites (known as relying parties, or RP) using a third-party service, eliminating the need for webmasters to provide their own ad hoc login systems.
+
+
+### OpenID Connect
+
+\begin{center}
+  \includegraphics[width=0.75\textwidth]{./assets/OpenIDConnect-Map-4Feb2014.png}
+\end{center}
+
+
+### OpenID Connect
+!!! not: openid idp isi nasil isliyor  
+
+#### OpenID provider (OP)
+An identity provider, or OpenID provider (OP) is a service that specializes in registering OpenID URLs or XRIs. OpenID enables an end-user to communicate with a relying party  
+
+With OpenID, your password is only given to your identity provider, and that provider then confirms your identity to the websites you visit
+
+
+### OpenID Connect
+#### ID Token
+!!! not: id token notu al
+
+\begin{center}
+  \includegraphics[width=0.6\textwidth]{./assets/id_token.png}
+\end{center}
+
+### OpenID Connect
+#### ID Token
+
+```json
+{
+    "iss": "https://self-issued.me",
+    "nonce": "n-0S6_WzA2Mj",
+    "exp": 1311281970,
+    "iat": 1311280970,
+    "sub_jwk" : {
+        "crv":"secp256k1",
+        "kid":"did:example:0xcd#verikey-1",
+        "kty":"EC",
+        "x":"7KEKZa5xJPh7WVqHJyUpb2MgEe3nA8Rk7eUlXsmBl-M",
+        "y":"3zIgl_ml4RhapyEm5J7lvU-4f5jiBvZr4KgxUjEhl9o"
+    },
+    "sub": "9-aYUQ7mgL2SWQ_LNTeVN2rtw7xFP-3Y2EO9WV22cF0",
+    "did": "did:example:0xcd"
+}
+```
+
+### OpenID Connect
+#### Security
+- Registration between RP and OP is mandatory, can be done with public metadata exchange and selfregistration
+- JSON messages can be signed and/or encrypted with the help of asymmetric keys (public keys published in JWKS) or symmetric keys (client secret)
+
+
+### Single Sign On
+!!! yukardaki protokollerin tek olayi sso degil fakat genellikle bu amacla kullaniliyorlar. 
+!!! not: open id den alinan id tokenler birden fazlo uygulamada login olabilir, session acabilir yanit sso 
+!!! not: cas zaten sso implementasyonu, samlin ana kullanim amaci zaten sso implement etmek
+
+Single sign-on (SSO) is an authentication scheme that allows a user to log in with a single ID and password to any of several related, yet independent, software systems.
+
+### Web Single Sign On protocols
+- Based on the principle of an authentication server, a lot
+of SSO standards have been created:
+    - CoSign (Weblogin), Pubcookie, Webauth, CAH, CAS, WebID, BrowserID (Persona), SAML, WS-*, Liberty alliance, SAML 2, Shibboleth, OpenID, OpenID Connect...
+- But nowadays, only a few are really used:
+    - CAS, SAML 2, OpenID Connect
+
+### CAS 
+### CAS 
+
+The Central Authentication Service (CAS) is a single *sign-on* protocol for the web.
+
+Its purpose is to permit a user to access multiple applications while providing their credentials (such as userid and password) only once. It also allows web applications to authenticate users without gaining access to a user's security credentials, such as a password.
+
+### CAS 
+#### Security
+- No obligation to declare CAS clients in CAS server (open mode)
+- Trust between CAS client and CAS server relies on CAS server certificate validation
 
 ### Protocol Comparison
-- CAS: simple protocol, no strong security, fits internal
-usage
-- SAML: complex protocol, very used for SaaS
-authentication, good security, well established
-- OpenID Connect: easy adoption with new technologies
-(JSON/REST/OAuth2), mobile ready, good security, still
-not wide spread
+- CAS: simple protocol, no strong security, fits internal usage
+- SAML: complex protocol, very used for SaaS authentication, good security, well established
+- ***OpenID Connect:*** easy adoption with new technologies (JSON/REST/OAuth2), mobile ready, good security, *still not wide spread
+
+
+### Auth Protocols & DID Auth
+
+- Self-Issued OpenID Connect Provider DID Profile (did-siop, DIF)
+- DID IdP for CAS ?
+- DID Authentication on PAM ?
+
+### self-issued openid connect provider
+!!! not: Self-Issued OpenID Connect Provider bunu acikla, protokolde ne gibi farkliliklara yol acabilir
+!!! not: SIOP OP tan ne farki var, OP internette duruken, SIOP sende localde duruyor.
+
+- A normal provider such as Google, is available at an HTTP endpoint. Requests to normal providers use the http:// protocol.
+
+- A self-issued provider is usually installed on the end-user's device. Requests to self-issued providers use the openid:// protocol.  
+
+
+### self-issued openid connect provider DID Profile (did-siop, DIF)
+
+***The work on DIF SIOP DID Profile specification has moved to OIDF AB WG to work on a new SIOP v2 specification that will either introduce breaking changes to the DIF SIOP DID Profile specification or will replace it with an implementation guide document on how to use SIOP v2 in an SSI context.***
+
+
+### DID SIOP
+
+#### Terminology
+
+\begin{center}
+  \includegraphics[width=0.9\textwidth]{./assets/siop_term.png}
+\end{center}
+
+### Introduction
+\framesubtitle{DID SIOP}
+!!! not: While this specification focuses on the integration of Identity Wallets in the form of browser extensions/ plugins, or smartphone apps, it does not prevent implementers using the proposed flow in different scenarios as well, e.g., between two web services with pre-populated DIDs.
+!!! not: cevir, nota ekle
+
+An everyday use case that the Decentralized Identity community identified is the sign-up or login with web applications. Nowadays, this is often achieved through social login schemes such as Google Sign-In. *While the Decentralized Identity community has serious concerns about social login, the underlying protocol, OIDC, does not have these flaws by design.* SIOP DID provides great potential by leveraging an Identity Wallet, e.g., as a smartphone app, on the web. This will increase and preserve the user’s privacy by preventing third-parties from having the ability to track which web applications a user is interacting with.
+
+### Introduction
+\framesubtitle{DID SIOP}
+
+#### Purpose
+The main purpose is to sign up with/ login to an RP (Relaying Party), i.e., web application. It assumes the user operates a mobile or desktop browser or a browser-based app that can respond to SIOP requests according to this specification.
+
+#### Goals
+- Staying backward compatible with existing OIDC clients and OPs (OpenID Provider) that implement the SIOP specification which is part of the OIDC core specification as per [OIDC.Core] to reach a broader community.
+- Adding validation rules for OIDC clients that have DID AuthN support to make full use of DIDs.
+- Not relying on any intermediary such as a traditional centralized public or private OP while still being OIDC-compliant.
+
+
+### Protocol Flow
+\framesubtitle{DID SIOP}
+
+- First, the user clicks on the sign up or login UX element. The RP will then generate the redirect to openid://<SIOP Request> which will be handled by the SIOP.
+
+- The SIOP will generate the <SIOP Response> based on the specific DID method that is supported. The <SIOP Response> will be signed and optionally encrypted and will be provided according to the requested response mode.
+
+### Protocol Flow
+\framesubtitle{DID SIOP}
+!!! not: detaylari anla not al
+
+- Unlike the OIDC Authorization Code Flow as per [OIDC.Core], the SIOP will not return an access token to the RP
+
+- SIOP also differs from Authorization Code Flow by not relying on a centralized and known OP. The SIOP can be unknown to the RP until the user starts to interact with the RP using its Identity Wallet 
+
+-  OIDC Authorization Code Flow is still a useful approach and should be used whenever the OP is known, and OP discovery is possible, e.g., exchanged or pre-populated DID Document containing an openid element in the service section.
+
+- The SIOP flow allows to integrate Identity Wallets with plain OIDC clients if they implemented the SIOP specification. In contrast, using DID AuthN as the authentication means in the OIDC Authorization Code Flow would require integration with the OP vendor itself.
+
+
+### Protocol Flow
+\framesubtitle{DID SIOP}
+
+#### Example SIOP flow 
+\begin{center}
+  \includegraphics[width=0.75\textwidth]{./assets/did_authn_siop_profile_flow_1.png}
+\end{center}
+
+### Protocol Flow
+\framesubtitle{DID SIOP}
+
+##### Example SIOP flow 
+\begin{center}
+  \includegraphics[width=0.75\textwidth]{./assets/did_authn_siop_profile_flow_2.png}
+\end{center}
 
 ### DID PAM
-!!! giris slayti  
+!!! not: bu bolumleri tartisma soru seklinde yap ve bitir
+
+### Pluggable Authentication Module (PAM)
+!!! not: bu bolumleri tartisma soru seklinde yap ve bitir, normalde saml da olcakti fakat karisik oldugu icin gectim
 
 did authn Pluggable Authentication Modullerde kullanilabilir mi ?
 
-### Pluggable Authentication Module (PAM)
-!!! giris slayti  
+### PAM Recepies
+- Encrypted Home Directories
+- Working with Secure Shell
+- Apache htaccess Made Smart
+- Directory Services
 
-
-### Repositories
-
-- decentralized-identity/did-auth-jose
-- decentralized-identity/did-common-java
-
-### Sources
-
-https://github.com/mrkaurelius/did_and_friends/blob/master/README.md
+### DID IdP for CAS ?
+!!! not: bu bolumleri tartisma soru seklinde yap ve bitir
