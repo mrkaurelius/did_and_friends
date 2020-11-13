@@ -23,8 +23,6 @@ fontsize: 10pt
 ### DID Auth Development
 
 - did-auth-jose (October 2018, ietf, dif) *archived sept 22*
-    - Javascript Object Signing and Encryption (JOSE)
-    - jwt, jws, jwe, jwk, jwa (JOSE)
 
 - DID SIOP (Sep 12, 2019, dif) *Current focus*
   - successor of did-auth-jose
@@ -194,6 +192,36 @@ JWT challenge resoponse example
 - Fulfill JavaScript Promise
 - Device-to-device Communication
 
+###  Auth Architecture Web page and mobile app
+\framesubtitle{RWoT 6 DID Auth}
+
+!!! Auth architecture gorselleri ekle
+!!! not: detaylari not al
+
+\begin{center}
+  \includegraphics[width=0.75\textwidth]{./assets/DID_Auth_Diagrams1.png}
+\end{center}
+
+###  Auth Architecture Web page and DID Auth service
+\framesubtitle{RWoT 6 DID Auth}
+
+!!! Auth architecture gorselleri ekle
+!!! not: detaylari not al
+
+\begin{center}
+  \includegraphics[width=0.75\textwidth]{./assets/DID_Auth_Diagrams3.png}
+\end{center}
+
+###  Auth Architecture Mobile apps and DID Auth services
+\framesubtitle{RWoT 6 DID Auth}
+
+!!! Auth architecture gorselleri ekle
+!!! not: detaylari not al
+
+\begin{center}
+  \includegraphics[width=0.75\textwidth]{./assets/DID_Auth_Diagrams7.png}
+\end{center}
+
 
 ### Relation to Other Technologies
 \framesubtitle{RWoT 6 DID Auth}
@@ -276,6 +304,7 @@ A set of libindy wrappers for developing Indy-based applications in your favorit
 did-auth-jose is a library that provides JOSE encryption, decryption, signing, and verifying capabilities through a key and algorithm extensible model, as well as two authentication flows for use with decentralized identities (DIDs).  
 
 *evolved to did-siop*
+#### OIDC Authentication Flow
 
 
 ### DIF Authentication Working Group (Jan 14 2020)

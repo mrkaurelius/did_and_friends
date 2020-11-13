@@ -39,7 +39,7 @@ fontsize: 10pt
 
 ### Nelerden bahsedecegiz
 
-#### Current Auth Protocols & DID Auth
+#### Auth Protocols & DID Auth
 - web auth kisa
 - single sign on
 - single sign on ile basic auth farki
